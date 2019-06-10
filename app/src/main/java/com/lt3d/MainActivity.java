@@ -7,6 +7,7 @@ import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
+import com.lt3d.tools.retrofit.Service;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -66,5 +67,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         overridePendingTransition(0, 0);
+    }
+
+    public User getUser() {
+        return this.user;
     }
 }

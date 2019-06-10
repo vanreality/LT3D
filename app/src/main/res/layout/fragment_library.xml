@@ -6,7 +6,7 @@
     android:id="@+id/fragment_library">
 
     <EditText
-        android:id="@+id/library_search"
+        android:id="@+id/edt_library_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="text"
