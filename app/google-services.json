@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "404330220176",
+    "firebase_url": "https://lt3d-a324e.firebaseio.com",
+    "project_id": "lt3d-a324e",
+    "storage_bucket": "lt3d-a324e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:404330220176:android:d3cc1f839b98128b",
+        "android_client_info": {
+          "package_name": "com.lt3d"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "404330220176-6gm8p87rekm914qvrh45uv46b73hh287.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.lt3d",
+            "certificate_hash": "4467b771eaef5cf833f182ce2c24985254e1f3ce"
+          }
+        },
+        {
+          "client_id": "404330220176-ib4hdh1r5lcusc4b5cd6ok5alv1um5f8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdSQEw4av9b74tYCp20fK1xJ1zfJxS_8M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "404330220176-ib4hdh1r5lcusc4b5cd6ok5alv1um5f8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

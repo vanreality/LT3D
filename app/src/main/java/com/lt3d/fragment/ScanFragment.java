@@ -9,9 +9,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.firebase.ui.auth.AuthUI;
 import com.lt3d.R;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ScanFragment extends Fragment {
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
