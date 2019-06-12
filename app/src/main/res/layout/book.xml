@@ -6,9 +6,16 @@
     <TextView
         android:id="@+id/library_book"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
+        android:layout_height="60dp"
         android:layout_gravity="center_vertical"
-        android:paddingLeft="20dp"/>
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginLeft="15dp"
+        android:background="@drawable/textview_style"
+        android:paddingLeft="20dp"
+        android:radius="15dp"
+        android:textSize="20sp"
+        android:textColor="@color/colorBookName" />
 
 </LinearLayout>
