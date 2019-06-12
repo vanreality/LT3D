@@ -15,14 +15,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "404330220176-6gm8p87rekm914qvrh45uv46b73hh287.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.lt3d",
-            "certificate_hash": "4467b771eaef5cf833f182ce2c24985254e1f3ce"
-          }
-        },
-        {
           "client_id": "404330220176-ib4hdh1r5lcusc4b5cd6ok5alv1um5f8.apps.googleusercontent.com",
           "client_type": 3
         }

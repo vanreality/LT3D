@@ -143,7 +143,6 @@ public class SigninActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 user = FirebaseAuth.getInstance().getCurrentUser();
-                openFirebaseMainActivity(user);
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -156,7 +155,7 @@ public class SigninActivity extends AppCompatActivity {
 
     private void openFirebaseMainActivity(FirebaseUser user) {
         Intent i = new Intent(this, MainActivity.class);
-        i.putExtra("user", user);
+        i.putExtra("user", user.getDisplayName());
         startActivity(i);
         overridePendingTransition(0, 0);
     }

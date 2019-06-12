@@ -16,6 +16,11 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.lt3d.MainActivity;
 import com.lt3d.R;
 import com.lt3d.data.User;
@@ -28,6 +33,8 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
+import java.util.Dictionary;
+import java.util.HashMap;
 import java.util.List;
 
 import retrofit2.Call;
@@ -35,25 +42,24 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LibraryFragment extends Fragment {
-    EditText edt_search;
-    User user;
-    RecyclerView libraryRecyclerView;
-    LibraryRecyclerViewAdapter libraryRecyclerViewAdapter;
-    Service service;
-    String userId;
-    View view;
+    private EditText edt_search;
+    private RecyclerView libraryRecyclerView;
+    private LibraryRecyclerViewAdapter libraryRecyclerViewAdapter;
+    private Service service;
+    private String userId;
+    private View view;
+    private DatabaseReference databaseReference;
+    private ValueEventListener bookListener;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        user = ((MainActivity) context).getUser();
-//        init();
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_library, null);
+        view = inflater.inflate(R.layout.fragment_library, container, false);
         init();
         return view;
     }
@@ -62,9 +68,9 @@ public class LibraryFragment extends Fragment {
         edt_search = view.findViewById(R.id.edt_library_search);
         libraryRecyclerView = view.findViewById(R.id.library_recyclerView);
 
-        service = ServiceFactory.createService(
-                LocalDataProcessor.readPreference(getActivity()).getUrl(),
-                Service.class);
+//        service = ServiceFactory.createService(
+//                LocalDataProcessor.readPreference(getActivity()).getUrl(),
+//                Service.class);
 //        getCurrentUserId(user);
         recyclerViewConfig();
     }
@@ -95,6 +101,27 @@ public class LibraryFragment extends Fragment {
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
+
+        //TODO add books into adapter and notify insert
+
+        Log.d("getData", "launched");
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("books");
+
+        bookListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataEntity tmp = new DataEntity(((HashMap) dataSnapshot.getValue()).get("bk1").toString(), "1");
+                libraryRecyclerViewAdapter.addData(tmp);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        };
+
+        databaseReference.addValueEventListener(bookListener);
 
 //        Call<Books> call = service.getBooks(user.getHash());
 //
