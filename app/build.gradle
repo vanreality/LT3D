@@ -25,8 +25,11 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.8.5'
 
     //import firebase service
+    implementation 'android.arch.core:runtime:1.1.1'
+    implementation 'com.firebaseui:firebase-ui-database:4.3.2'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
     implementation 'com.google.firebase:firebase-core:16.0.9'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.firebaseui:firebase-ui-auth:5.0.0'
     implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
