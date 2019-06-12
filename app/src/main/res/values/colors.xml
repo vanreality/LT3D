@@ -4,5 +4,5 @@
     <color name="colorPrimaryDark">#e8b361</color>
     <color name="colorAccent">#D81B60</color>
     <color name="colorBook">#d4716e</color>
-    <color name="colorBookName">#ffffff</color>
+    <color name="colorBookName">#d4716e</color>
 </resources>
