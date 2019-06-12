@@ -34,6 +34,7 @@ public class SigninActivity extends AppCompatActivity {
     TextView txt_signup;
     EditText edt_pseudo, edt_password;
     Setting setting;
+    FirebaseUser user;
     private static final int RC_SIGN_IN = 123;
 
     @Override
@@ -41,8 +42,8 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
 
-        init();
-//        createFirebaseSignInIntent();
+//        init();
+        createFirebaseSignInIntent();
     }
 
     private void init() {
@@ -51,8 +52,6 @@ public class SigninActivity extends AppCompatActivity {
         edt_pseudo = findViewById(R.id.edt_pseudo);
         edt_password = findViewById(R.id.edt_password);
         setting = LocalDataProcessor.readPreference(this);
-
-
 
         txt_signup.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -143,16 +142,23 @@ public class SigninActivity extends AppCompatActivity {
 
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
-                FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("test", user.getDisplayName());
-                // ...
+                user = FirebaseAuth.getInstance().getCurrentUser();
+                openFirebaseMainActivity(user);
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
                 // ...
+                //TODO display sign in failed situation
             }
         }
+    }
+
+    private void openFirebaseMainActivity(FirebaseUser user) {
+        Intent i = new Intent(this, MainActivity.class);
+        i.putExtra("user", user);
+        startActivity(i);
+        overridePendingTransition(0, 0);
     }
 
     private void openMainActivity(User user) {

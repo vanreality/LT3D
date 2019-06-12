@@ -65,7 +65,7 @@ public class LibraryFragment extends Fragment {
         service = ServiceFactory.createService(
                 LocalDataProcessor.readPreference(getActivity()).getUrl(),
                 Service.class);
-        getCurrentUserId(user);
+//        getCurrentUserId(user);
         recyclerViewConfig();
     }
 
@@ -96,23 +96,23 @@ public class LibraryFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
 
-        Call<Books> call = service.getBooks(user.getHash());
-
-        call.enqueue(new Callback<Books>() {
-            @Override
-            public void onResponse(Call<Books> call, Response<Books> response) {
-                if (response.isSuccessful()) {
-                    for (Books.ListsBean b : response.body().getLists()) {
-                        libraryRecyclerViewAdapter.addData(new DataEntity(b.getLabel(), b.getId()));
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Books> call, Throwable t) {
-
-            }
-        });
+//        Call<Books> call = service.getBooks(user.getHash());
+//
+//        call.enqueue(new Callback<Books>() {
+//            @Override
+//            public void onResponse(Call<Books> call, Response<Books> response) {
+//                if (response.isSuccessful()) {
+//                    for (Books.ListsBean b : response.body().getLists()) {
+//                        libraryRecyclerViewAdapter.addData(new DataEntity(b.getLabel(), b.getId()));
+//                    }
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Books> call, Throwable t) {
+//
+//            }
+//        });
     }
 
     private void getCurrentUserId(final User user) {
