@@ -1,6 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="Account: "
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/account_show"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:textSize="24sp" />
+</LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="Version: "
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/version_show"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center"
+            android:text="1.0.0"
+            android:textSize="24sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:text="Copyrignt: "
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/copyright_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Copyrignt20190613.AllRightsReserved"
+            android:textSize="20sp"
+            android:paddingLeft="10dp"
+            android:paddingRight="20dp"/>
+    </LinearLayout>
+
 
 </LinearLayout>
