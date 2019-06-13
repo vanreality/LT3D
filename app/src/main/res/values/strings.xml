@@ -13,4 +13,6 @@
     <string name="sign_up_to_lt3d">Sign up to LT3D</string>
     <string name="confirm_password">Confirm password</string>
     <string name="library_search">Enter the book name</string>
+    <string name="title_activity_augmented_img">AugmentedImgActivity</string>
+    <string name="fit_image_to_scan">Fit image to scan</string>
 </resources>
