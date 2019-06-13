@@ -102,8 +102,6 @@ public class LibraryFragment extends Fragment {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
 
-        //TODO add books into adapter and notify insert
-
         databaseReference = FirebaseDatabase.getInstance().getReference().child("books");
 
         valueEventListener = new ValueEventListener() {
@@ -137,10 +135,9 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
 
-        //TODO add touch helper
-//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-//        itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("models/" + bid);
 
