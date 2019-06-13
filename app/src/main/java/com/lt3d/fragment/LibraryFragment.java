@@ -41,6 +41,7 @@ public class LibraryFragment extends Fragment {
     private View view;
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
+    private Menu myMenu;
 
     @Override
     public void onAttach(Context context) {
@@ -83,6 +84,7 @@ public class LibraryFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        myMenu = menu;
         inflater.inflate(R.menu.library_actionbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -90,7 +92,14 @@ public class LibraryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.recyclerViewConfig();
+        item.setVisible(false);
+
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showMenu(){
+        if(!myMenu.equals(null))
+            myMenu.getItem(0).setVisible(true);
     }
 
     private void recyclerViewConfig() {
@@ -101,8 +110,6 @@ public class LibraryFragment extends Fragment {
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
         itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
-
-        //TODO add books into adapter and notify insert
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("books");
 
@@ -137,10 +144,9 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
 
-        //TODO add touch helper
-//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
-//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
-//        itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
+        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
+        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+        itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("models/" + bid);
 
@@ -232,6 +238,7 @@ public class LibraryFragment extends Fragment {
             public void onClick(View v) {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
                     recyclerViewConfigModel(books.get(getAdapterPosition()).getId());
+                    showMenu();
                 }
             }
         }

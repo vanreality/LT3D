@@ -52,18 +52,19 @@ public class MainActivity extends AppCompatActivity {
         // [START auth_fui_create_intent]
         // Choose authentication providers
 
-//        List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build(),
-//                new AuthUI.IdpConfig.GoogleBuilder().build());
-
         List<AuthUI.IdpConfig> providers = Arrays.asList(
-                new AuthUI.IdpConfig.EmailBuilder().build());
+                new AuthUI.IdpConfig.EmailBuilder().build(),
+                new AuthUI.IdpConfig.GoogleBuilder().build());
+
+//        List<AuthUI.IdpConfig> providers = Arrays.asList(
+//                new AuthUI.IdpConfig.EmailBuilder().build());
 
         // Create and launch sign-in intent
         startActivityForResult(
                 AuthUI.getInstance()
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
+                        .setIsSmartLockEnabled(false, true)
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
@@ -78,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("user", currentUser.getDisplayName());
+//                Log.d("user", currentUser.getDisplayName());
                 init();
             } else {
                 // Sign in failed. If response is null the user canceled the
