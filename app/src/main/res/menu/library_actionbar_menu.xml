@@ -3,11 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/btn_goback"
         android:icon="?attr/actionModeCloseDrawable"
-        android:title="@string/goback"
-        app:showAsAction="always"></item>
-
+        android:title=""
+        app:showAsAction="always" />
 
 
 
