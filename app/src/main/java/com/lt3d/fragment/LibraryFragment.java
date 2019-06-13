@@ -4,6 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -21,19 +24,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.lt3d.MainActivity;
 import com.lt3d.R;
 import com.lt3d.data.User;
-import com.lt3d.tools.LocalDataProcessor;
-import com.lt3d.tools.retrofit.Books;
 import com.lt3d.tools.retrofit.Service;
-import com.lt3d.tools.retrofit.ServiceFactory;
 import com.lt3d.tools.retrofit.Users;
 import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
-import java.util.Dictionary;
 import java.util.HashMap;
 import java.util.List;
 
@@ -45,8 +43,7 @@ public class LibraryFragment extends Fragment {
     private EditText edt_search;
     private RecyclerView libraryRecyclerView;
     private LibraryRecyclerViewAdapter libraryRecyclerViewAdapter;
-    private Service service;
-    private String userId;
+    private LibraryRecyclerViewModelAdapter libraryRecyclerViewModelAdapter;
     private View view;
     private DatabaseReference databaseReference;
     private ValueEventListener bookListener;
@@ -68,29 +65,38 @@ public class LibraryFragment extends Fragment {
         edt_search = view.findViewById(R.id.edt_library_search);
         libraryRecyclerView = view.findViewById(R.id.library_recyclerView);
 
-//        service = ServiceFactory.createService(
-//                LocalDataProcessor.readPreference(getActivity()).getUrl(),
-//                Service.class);
-//        getCurrentUserId(user);
+        setHasOptionsMenu(true);
         recyclerViewConfig();
     }
 
     class DataEntity {
-        private String bookName;
+        private String label;
         private String id;
 
-        DataEntity(String bookName, String id) {
-            this.bookName = bookName;
+        DataEntity(String label, String id) {
+            this.label = label;
             this.id = id;
         }
 
-        String getBookName() {
-            return bookName;
+        String getLabel() {
+            return label;
         }
 
-        String getBookId() {
+        String getId() {
             return id;
         }
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.library_actionbar_menu, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        this.recyclerViewConfig();
+        return super.onOptionsItemSelected(item);
     }
 
     private void recyclerViewConfig() {
@@ -122,45 +128,40 @@ public class LibraryFragment extends Fragment {
         };
 
         databaseReference.addValueEventListener(bookListener);
-
-//        Call<Books> call = service.getBooks(user.getHash());
-//
-//        call.enqueue(new Callback<Books>() {
-//            @Override
-//            public void onResponse(Call<Books> call, Response<Books> response) {
-//                if (response.isSuccessful()) {
-//                    for (Books.ListsBean b : response.body().getLists()) {
-//                        libraryRecyclerViewAdapter.addData(new DataEntity(b.getLabel(), b.getId()));
-//                    }
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Books> call, Throwable t) {
-//
-//            }
-//        });
     }
 
-    private void getCurrentUserId(final User user) {
-        Call<Users> call = service.getUsers(user.getHash());
+    private void recyclerViewConfigModel() {
+        libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<DataEntity>());
+        libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
 
-        call.enqueue(new Callback<Users>() {
+        //TODO add touch helper
+//        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
+//        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
+//        itemTouchHelper.attachToRecyclerView(libraryRecyclerView);
+
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("models/bk1/md1");
+
+        bookListener = new ValueEventListener() {
             @Override
-            public void onResponse(Call<Users> call, Response<Users> response) {
-                if (response.isSuccessful()) {
-                    userId = response.body().getUserId(user.getPseudo());
-                }
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DataEntity tmp = new DataEntity(((HashMap) dataSnapshot.getValue()).get("title").toString(), "1");
+                libraryRecyclerViewModelAdapter.addData(tmp);
             }
 
             @Override
-            public void onFailure(Call<Users> call, Throwable t) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
-        });
+        };
+
+        databaseReference.addValueEventListener(bookListener);
     }
 
-    class LibraryRecyclerViewAdapter extends RecyclerView.Adapter<LibraryRecyclerViewAdapter.LibraryViewHolder> implements ItemTouchHelperAdapter {
+    class LibraryRecyclerViewAdapter
+            extends RecyclerView.Adapter<LibraryRecyclerViewAdapter.LibraryViewHolder>
+            implements ItemTouchHelperAdapter {
+
         private final List<DataEntity> books;
         LibraryRecyclerViewAdapter(List<DataEntity> books) {
             this.books = books;
@@ -181,7 +182,7 @@ public class LibraryFragment extends Fragment {
 
         @Override
         public void onBindViewHolder(@NonNull LibraryViewHolder holder, int position) {
-            holder.bind(books.get(position).getBookName());
+            holder.bind(books.get(position).getLabel());
         }
 
         @Override
@@ -215,7 +216,70 @@ public class LibraryFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //TODO onclick event to change the fragment content
+                if(getAdapterPosition()!=RecyclerView.NO_POSITION){
+                    recyclerViewConfigModel();
+                }
+            }
+        }
+    }
+
+
+    class LibraryRecyclerViewModelAdapter
+            extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
+            implements ItemTouchHelperAdapter{
+        private final List<DataEntity>models;
+
+        LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
+            this.models = models;
+        }
+        public void addData(DataEntity model){
+            models.add(model);
+            notifyItemInserted(models.size());
+        }
+
+        @NonNull
+        @Override
+        public LibraryRecyclerViewModelAdapter.LibraryViewModelHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+            View view = inflater.inflate(R.layout.model,parent,false);
+            return new LibraryRecyclerViewModelAdapter.LibraryViewModelHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(@NonNull LibraryViewModelHolder holder, int position) {
+            holder.bind(models.get(position).getLabel());
+        }
+
+        @Override
+        public int getItemCount() {
+            return models==null?0:models.size();
+        }
+
+        @Override
+        public void onItemDissmiss(int postion) {
+            //TODO delete function
+        }
+
+        @Override
+        public void onItemMove(int fromPosition, int toPosition) {
+            //TODO move models function
+        }
+
+        public class LibraryViewModelHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            private final TextView textView;
+            public LibraryViewModelHolder(@NonNull View itemView) {
+                super(itemView);
+                textView = itemView.findViewById(R.id.library_model);
+                itemView.setOnClickListener(this);
+            }
+
+            public void bind(String modelName) {
+                textView.setText(modelName);
+            }
+
+            @Override
+            public void onClick(View view) {
+
             }
         }
     }
