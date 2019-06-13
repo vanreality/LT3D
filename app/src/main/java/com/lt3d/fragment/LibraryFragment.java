@@ -48,7 +48,7 @@ public class LibraryFragment extends Fragment {
     private View view;
     private DatabaseReference databaseReference;
     private ValueEventListener bookListener;
-    //private MenuItem menu_item;
+    private MenuItem menu_item;
 
     @Override
     public void onAttach(Context context) {
@@ -61,7 +61,7 @@ public class LibraryFragment extends Fragment {
 
         view = inflater.inflate(R.layout.fragment_library, container, false);
         init();
-        //menu_item=view.findViewById(R.id.menu_goback);
+
         return view;
     }
 
@@ -70,6 +70,7 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerView = view.findViewById(R.id.library_recyclerView);
 
         setHasOptionsMenu(true);
+        menu_item=view.findViewById(R.id.menu_goback);
         recyclerViewConfig();
     }
 
@@ -100,7 +101,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.recyclerViewConfig();
-       // item.setVisible(false);
+        item.setVisible(false);
         return super.onOptionsItemSelected(item);
     }
 
@@ -142,7 +143,7 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
 
-       // menu_item.setVisible(true);
+//         menu_item.setVisible(true);
 
         //TODO add touch helper
 //        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
