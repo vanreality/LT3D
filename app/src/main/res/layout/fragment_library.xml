@@ -9,9 +9,15 @@
         android:id="@+id/edt_library_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/edittext_style"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
         android:hint="@string/library_search"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingLeft="10dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/library_recyclerView"
