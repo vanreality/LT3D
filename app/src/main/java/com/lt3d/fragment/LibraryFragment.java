@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
 import com.lt3d.R;
 import com.lt3d.data.User;
 import com.lt3d.tools.retrofit.Service;
@@ -47,6 +48,7 @@ public class LibraryFragment extends Fragment {
     private View view;
     private DatabaseReference databaseReference;
     private ValueEventListener bookListener;
+    //private MenuItem menu_item;
 
     @Override
     public void onAttach(Context context) {
@@ -56,8 +58,10 @@ public class LibraryFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
         view = inflater.inflate(R.layout.fragment_library, container, false);
         init();
+        //menu_item=view.findViewById(R.id.menu_goback);
         return view;
     }
 
@@ -96,6 +100,7 @@ public class LibraryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         this.recyclerViewConfig();
+       // item.setVisible(false);
         return super.onOptionsItemSelected(item);
     }
 
@@ -103,6 +108,8 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerViewAdapter = new LibraryRecyclerViewAdapter(new ArrayList<DataEntity>());
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewAdapter);
+
+//        menu_item.setVisible(false);
 
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(callback);
@@ -134,6 +141,8 @@ public class LibraryFragment extends Fragment {
         libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<DataEntity>());
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
+
+       // menu_item.setVisible(true);
 
         //TODO add touch helper
 //        ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);

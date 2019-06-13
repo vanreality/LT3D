@@ -5,7 +5,8 @@
     <item
         android:icon="?attr/actionModeCloseDrawable"
         android:title=""
-        app:showAsAction="always" />
+        app:showAsAction="always"
+        android:id="@+id/menu_goback"/>
 
 
 
