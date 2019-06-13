@@ -9,7 +9,6 @@
         android:id="@+id/library_book"
         android:layout_width="match_parent"
         android:layout_height="@dimen/book_height"
-        android:layout_gravity="center_vertical"
         android:layout_marginTop="@dimen/book_marginTop"
         android:layout_marginBottom="@dimen/book_marginBottom"
         android:layout_marginRight="@dimen/book_marginLR"
@@ -17,6 +16,8 @@
         android:background="@drawable/textview_style"
         android:textSize="@dimen/bookName_size"
         android:textColor="@color/colorBookName"
-        android:gravity="center"></TextView>
+        android:gravity="center"
+        android:drawableStart="@drawable/ic_point"
+        android:paddingLeft="25dp"></TextView>
 
 </LinearLayout>
