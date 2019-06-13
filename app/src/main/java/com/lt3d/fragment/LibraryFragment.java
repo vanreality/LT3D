@@ -83,7 +83,7 @@ public class LibraryFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        myMenu=menu;
+        myMenu = menu;
         inflater.inflate(R.menu.library_actionbar_menu, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
