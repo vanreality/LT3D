@@ -2,21 +2,21 @@
 <!--suppress AndroidDomInspection -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <TextView
         android:id="@+id/library_book"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="@dimen/book_height"
         android:layout_gravity="center_vertical"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
+        android:layout_marginTop="@dimen/book_marginTop"
+        android:layout_marginBottom="@dimen/book_marginBottom"
+        android:layout_marginRight="@dimen/book_marginLR"
+        android:layout_marginLeft="@dimen/book_marginLR"
         android:background="@drawable/textview_style"
-        android:paddingLeft="20dp"
-        android:radius="15dp"
-        android:textSize="20sp"
-        android:textColor="@color/colorBookName"/>
+        android:textSize="@dimen/bookName_size"
+        android:textColor="@color/colorBookName"
+        android:gravity="center"></TextView>
 
 </LinearLayout>
