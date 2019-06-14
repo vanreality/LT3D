@@ -24,14 +24,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.lt3d.MainActivity;
 import com.lt3d.R;
 import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class LibraryFragment extends Fragment {
     private EditText edt_search;
@@ -42,6 +43,7 @@ public class LibraryFragment extends Fragment {
     private DatabaseReference databaseReference;
     private ValueEventListener valueEventListener;
     private Menu myMenu;
+    private MainActivity mainActivity;
 
     @Override
     public void onAttach(Context context) {
@@ -59,6 +61,7 @@ public class LibraryFragment extends Fragment {
     private void init() {
         edt_search = view.findViewById(R.id.edt_library_search);
         libraryRecyclerView = view.findViewById(R.id.library_recyclerView);
+        mainActivity = (MainActivity) getActivity();
 
         setHasOptionsMenu(true);
         recyclerViewConfig();
@@ -91,15 +94,17 @@ public class LibraryFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.recyclerViewConfig();
-        item.setVisible(false);
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                recyclerViewConfig();
+                mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        }
 
         return super.onOptionsItemSelected(item);
     }
 
     private void showMenu(){
-        if(!myMenu.equals(null))
-            myMenu.getItem(0).setVisible(true);
+        myMenu.getItem(0).setVisible(true);
     }
 
     private void recyclerViewConfig() {
@@ -124,7 +129,7 @@ public class LibraryFragment extends Fragment {
                 for (int i = 1; i < bookData.size() + 1; i++) {
                     bid = "bk" + i;
                     if (bookData.get(bid) != null) {
-                        tmp = new DataEntity(bookData.get(bid).toString(), bid);
+                        tmp = new DataEntity(Objects.requireNonNull(bookData.get(bid)).toString(), bid);
                         libraryRecyclerViewAdapter.addData(tmp);
                     }
                 }
@@ -141,7 +146,7 @@ public class LibraryFragment extends Fragment {
 
     private void recyclerViewConfigModel(String bid) {
         libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<DataEntity>());
-        libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        libraryRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
 
         ItemTouchHelper.Callback callback = new ItemTouchHelperCallback(libraryRecyclerViewAdapter);
@@ -153,8 +158,6 @@ public class LibraryFragment extends Fragment {
         valueEventListener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-//                DataEntity tmp = new DataEntity(((HashMap) dataSnapshot.getValue()).get("title").toString(), "1");
-
                 DataEntity tmp;
                 String mid;
                 HashMap modelData = (HashMap) dataSnapshot.getValue();
@@ -187,7 +190,7 @@ public class LibraryFragment extends Fragment {
             this.books = books;
         }
 
-        public void addData(DataEntity book) {
+        void addData(DataEntity book) {
             books.add(book);
             notifyItemInserted(books.size());
         }
@@ -211,19 +214,25 @@ public class LibraryFragment extends Fragment {
         }
 
         @Override
-        public void onItemDissmiss(int postion) {
-            //TODO delete function
+        public void onItemDissmiss(int position) {
+            books.remove(position);
+            notifyItemRemoved(position);
+
+            //TODO delete bid of the current user from firebase
         }
 
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
-            //TODO move book function
+            DataEntity tmp = books.get(fromPosition);
+            books.remove(fromPosition);
+            books.add(toPosition > fromPosition ? toPosition - 1 : toPosition, tmp);
+            notifyItemMoved(fromPosition,toPosition);
         }
 
         class LibraryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final TextView textView;
 
-            public LibraryViewHolder(@NonNull View itemView) {
+            LibraryViewHolder(@NonNull View itemView) {
                 super(itemView);
                 textView = itemView.findViewById(R.id.library_book);
 
@@ -239,6 +248,7 @@ public class LibraryFragment extends Fragment {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
                     recyclerViewConfigModel(books.get(getAdapterPosition()).getId());
                     showMenu();
+                    mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
             }
         }
@@ -253,7 +263,7 @@ public class LibraryFragment extends Fragment {
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
         }
-        public void addData(DataEntity model){
+        void addData(DataEntity model){
             models.add(model);
             notifyItemInserted(models.size());
         }
@@ -277,24 +287,30 @@ public class LibraryFragment extends Fragment {
         }
 
         @Override
-        public void onItemDissmiss(int postion) {
-            //TODO delete function
+        public void onItemDissmiss(int position) {
+            models.remove(position);
+            notifyItemRemoved(position);
+
+            //TODO delete mid of the current user in firebase
         }
 
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
-            //TODO move models function
+            DataEntity tmp = models.get(fromPosition);
+            models.remove(fromPosition);
+            models.add(toPosition > fromPosition ? toPosition - 1 : toPosition, tmp);
+            notifyItemMoved(fromPosition,toPosition);
         }
 
         public class LibraryViewModelHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
             private final TextView textView;
-            public LibraryViewModelHolder(@NonNull View itemView) {
+            LibraryViewModelHolder(@NonNull View itemView) {
                 super(itemView);
                 textView = itemView.findViewById(R.id.library_model);
                 itemView.setOnClickListener(this);
             }
 
-            public void bind(String modelName) {
+            void bind(String modelName) {
                 textView.setText(modelName);
             }
 
