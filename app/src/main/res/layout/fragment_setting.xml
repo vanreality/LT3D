@@ -2,7 +2,12 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/fragment_setting"
+    >
+
+
+
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -20,7 +25,7 @@
             android:id="@+id/account_show"
             android:layout_width="match_parent"
             android:layout_height="60dp"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:textSize="24sp" />
 </LinearLayout>
     <LinearLayout
@@ -41,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:gravity="center"
-            android:text="1.0.0"
+            android:text=""
             android:textSize="24sp" />
     </LinearLayout>
 
@@ -63,11 +68,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="Copyrignt20190613.AllRightsReserved"
+            android:text=""
             android:textSize="20sp"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"/>
     </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Disconnect"
+        android:id="@+id/btn_disconnect"
+        />
 
 
 </LinearLayout>
