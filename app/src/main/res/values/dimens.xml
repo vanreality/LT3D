@@ -13,4 +13,6 @@
     <dimen name="bookName_size">20sp</dimen>
     <dimen name="shape_padding">2dp</dimen>
     <dimen name="book_radius">15dp</dimen>
+    <dimen name="botton_radius">15dp</dimen>
+    <dimen name="booton_marginLR">15dp</dimen>
 </resources>
