@@ -8,11 +8,9 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
-import com.lt3d.tools.retrofit.Service;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -26,8 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private User user;
-    private static FirebaseUser currentUser;
+    private FirebaseUser currentUser;
     BottomNavigationView navView;
     private static final int RC_SIGN_IN = 123;
 
@@ -126,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public static FirebaseUser getCurrentUser() {
+    public FirebaseUser getCurrentUser() {
         return currentUser;
     }
 }

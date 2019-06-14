@@ -22,16 +22,12 @@ import com.google.firebase.auth.FirebaseUser;
 
 import com.lt3d.MainActivity;
 import com.lt3d.R;
-import com.lt3d.SigninActivity;
-import com.lt3d.SignupActivity;
 
 import java.util.Arrays;
 import java.util.List;
 
-import static com.lt3d.MainActivity.*;
-
 public class SettingFragment extends Fragment implements View.OnClickListener {
-    private FirebaseUser currentUser = (FirebaseUser) getCurrentUser();
+    private FirebaseUser currentUser;
     private TextView text_account;
     private TextView text_version;
     private TextView text_copyright;
@@ -55,8 +51,10 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     }
     public void init(){
+        currentUser = ((MainActivity) getActivity()).getCurrentUser();
+
         text_account=view.findViewById(R.id.account_show);
-        text_account.setText(""+currentUser.getDisplayName());
+        text_account.setText(currentUser.getDisplayName());
         text_version=view.findViewById(R.id.version_show);
         text_version.setText("1.0.0");
         text_copyright=view.findViewById(R.id.copyright_show);
