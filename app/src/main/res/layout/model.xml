@@ -13,9 +13,10 @@
         android:background="@drawable/textview_style"
         android:textSize="@dimen/bookName_size"
         android:textColor="@color/colorBookName"
-        android:gravity="center_vertical|left"
+        android:gravity="center_vertical|start"
         android:drawableStart="@drawable/modle"
-        android:paddingLeft="25dp"></TextView>
+        android:paddingStart="25dp"
+        android:paddingEnd="25dp"/>
 
 
 </LinearLayout>

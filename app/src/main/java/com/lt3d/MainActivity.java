@@ -81,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 Log.d("getUser", currentUser.getDisplayName());
+                Log.d("getUser", currentUser.getEmail());
+                Log.d("getUser", currentUser.getUid());
                 init();
             } else {
                 // Sign in failed. If response is null the user canceled the
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public User getUser() {
-        return this.user;
+    public FirebaseUser getCurrentUser() {
+        return this.currentUser;
     }
 }
