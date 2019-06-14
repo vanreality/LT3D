@@ -3,20 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/fragment_library">
+    android:id="@+id/fragment_library"
+    android:background="@color/color_bookBackground">
 
     <EditText
         android:id="@+id/edt_library_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
+        android:layout_marginLeft="@dimen/fragment_lib_marginLeft"
+        android:layout_marginTop="@dimen/fragment_lib_marginTop"
+        android:layout_marginRight="@dimen/fragment_lib_marginRight"
+        android:background="@drawable/edittext_style"
+        android:drawableLeft="@drawable/ic_search_black_24dp"
         android:hint="@string/library_search"
-        android:importantForAutofill="no" />
+        android:importantForAutofill="no"
+        android:inputType="text"
+        android:paddingLeft="@dimen/fragment_lib_padLeft"
+        android:gravity="center"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/library_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        />
+        android:layout_height="match_parent" />
 
 </LinearLayout>
