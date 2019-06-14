@@ -27,7 +27,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private User user;
-    private FirebaseUser currentUser;
+    private static FirebaseUser currentUser;
     BottomNavigationView navView;
     private static final int RC_SIGN_IN = 123;
 
@@ -126,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public FirebaseUser getCurrentUser() {
-        return this.currentUser;
+    public static FirebaseUser getCurrentUser() {
+        return currentUser;
     }
 }
