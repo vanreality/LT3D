@@ -8,11 +8,9 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
-import com.lt3d.tools.retrofit.Service;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
@@ -126,6 +124,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public FirebaseUser getCurrentUser() {
-        return this.currentUser;
+        return currentUser;
     }
 }
