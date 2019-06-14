@@ -13,4 +13,7 @@
     <string name="sign_up_to_lt3d">Sign up to LT3D</string>
     <string name="confirm_password">Confirm password</string>
     <string name="library_search"> Enter the book name</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="logoImageDescription">logo</string>
+    <string name="personImageDescription">person</string>
 </resources>

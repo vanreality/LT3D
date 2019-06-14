@@ -8,4 +8,5 @@
     <color name="colorBook">#ffffff</color>
     <color name="colorBookName">#4f5762</color>
     <color name="color_bookBackground">#f6f6f6</color>
+    <color name="color_bottonText">#ffffff</color>
 </resources>
