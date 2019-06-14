@@ -97,7 +97,7 @@ public class LibraryFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    public void showMenu(){
+    private void showMenu(){
         if(!myMenu.equals(null))
             myMenu.getItem(0).setVisible(true);
     }
