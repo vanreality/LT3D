@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
                         .createSignInIntentBuilder()
                         .setAvailableProviders(providers)
                         .setLogo(R.drawable.logo)
-                        .setIsSmartLockEnabled(false, true)
+//                        .setIsSmartLockEnabled(false, true)
                         .build(),
                 RC_SIGN_IN);
         // [END auth_fui_create_intent]
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-//                Log.d("user", currentUser.getDisplayName());
+                Log.d("getUser", currentUser.getDisplayName());
                 init();
             } else {
                 // Sign in failed. If response is null the user canceled the

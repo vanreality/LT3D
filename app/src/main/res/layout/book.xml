@@ -16,7 +16,7 @@
         android:background="@drawable/textview_style"
         android:textSize="@dimen/bookName_size"
         android:textColor="@color/colorBookName"
-        android:gravity="center"
+        android:gravity="center_vertical|left"
         android:drawableStart="@drawable/ic_point"
         android:paddingLeft="25dp"></TextView>
 
