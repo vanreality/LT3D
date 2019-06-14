@@ -40,9 +40,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         navView = findViewById(R.id.nav_view);
-
-        changeFragment(new LibraryFragment());
-
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
@@ -78,10 +75,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("getUser", currentUser.getDisplayName());
-                Log.d("getUser", currentUser.getEmail());
-                Log.d("getUser", currentUser.getUid());
-                init();
+                changeFragment(new LibraryFragment());
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check

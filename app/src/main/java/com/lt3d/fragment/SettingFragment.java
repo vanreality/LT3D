@@ -22,7 +22,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.lt3d.MainActivity;
 import com.lt3d.R;
 
-public class SettingFragment extends Fragment implements View.OnClickListener {
+public class SettingFragment extends Fragment {
     private View view;
     private MainActivity mainActivity;
 
@@ -42,22 +42,42 @@ public class SettingFragment extends Fragment implements View.OnClickListener {
 
     }
     public void init(){
+        TextView text_version = view.findViewById(R.id.version_show);
+        TextView text_copyright = view.findViewById(R.id.copyright_show);
+        TextView text_account = view.findViewById(R.id.account_show);
+        Button btn_disconnect = view.findViewById(R.id.btn_disconnect);
+
         mainActivity = (MainActivity) getActivity();
 
-        FirebaseUser currentUser = mainActivity.getCurrentUser();
 
-        TextView text_account = view.findViewById(R.id.account_show);
-        text_account.setText(currentUser.getDisplayName());
-        TextView text_version = view.findViewById(R.id.version_show);
+        if (mainActivity.getCurrentUser() == null) {
+            text_account.setText("Anonymous login");
+            btn_disconnect.setText("Connect");
+            btn_disconnect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = mainActivity.getIntent();
+                    mainActivity.overridePendingTransition(0, 0);
+                    mainActivity.finish();
+                    mainActivity.overridePendingTransition(0, 0);
+                    startActivity(intent);
+                }
+            });
+        } else {
+            FirebaseUser currentUser = mainActivity.getCurrentUser();
+            text_account.setText(currentUser.getDisplayName());
+            btn_disconnect.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    signOut();
+                }
+            });
+        }
         text_version.setText("1.0.0");
-        TextView text_copyright = view.findViewById(R.id.copyright_show);
         text_copyright.setText("Copyrignt20190613.AllRightsReserved");
-        Button btn_disconnect = view.findViewById(R.id.btn_disconnect);
-        btn_disconnect.setOnClickListener(this);
     }
 
-    @Override
-    public void onClick(View view) {
+    public void signOut() {
         AuthUI.getInstance()
                 .signOut(getContext())
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
