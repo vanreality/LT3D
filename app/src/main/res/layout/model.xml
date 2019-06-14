@@ -5,10 +5,17 @@
     <TextView
         android:id="@+id/library_model"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center_vertical"
-        android:paddingLeft="20dp"/>
+        android:layout_height="@dimen/book_height"
+        android:layout_marginTop="@dimen/book_marginTop"
+        android:layout_marginBottom="@dimen/book_marginBottom"
+        android:layout_marginRight="@dimen/book_marginLR"
+        android:layout_marginLeft="@dimen/book_marginLR"
+        android:background="@drawable/textview_style"
+        android:textSize="@dimen/bookName_size"
+        android:textColor="@color/colorBookName"
+        android:gravity="center"
+        android:drawableStart="@drawable/modle"
+        android:paddingLeft="25dp"></TextView>
 
 
 </LinearLayout>
