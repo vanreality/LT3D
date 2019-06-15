@@ -81,27 +81,12 @@ public class LibraryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
-                List<DataEntity> mbooks =new ArrayList<>();
-                String charString = sequence.toString();
-                if (charString.isEmpty()) {
-                   mbooks = libraryRecyclerViewAdapter.getBooks();
-                } else {
-                    mbooks.clear();
-                    List<DataEntity> books_search = new ArrayList<>();
-                    for(DataEntity book  : libraryRecyclerViewAdapter.getBooks()){
-                        if(book.getLabel().toUpperCase().contains(charString.toUpperCase())){
-                            Log.d("lookfor",charString);
-                            Log.d("result",""+charString.indexOf(book.getLabel()));
-                            books_search.add(book);
-                        }
-                    }
-                    mbooks= books_search;
-                    if(!mbooks.isEmpty())
-                    Log.d("book",""+books_search.get(0).getLabel());
-                }
-                libraryRecyclerView.setAdapter(new LibraryRecyclerViewAdapter(mbooks));
+
+                libraryRecyclerViewAdapter.lookefor(sequence);
+                if(libraryRecyclerViewModelAdapter!=null)
+                libraryRecyclerViewModelAdapter.lookefor(sequence);
             }
-            
+
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -141,6 +126,7 @@ public class LibraryFragment extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 recyclerViewConfig();
+                edt_search.setText("");
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 return true;
                 //TODO: 补全add功能
@@ -202,6 +188,7 @@ public class LibraryFragment extends Fragment {
     }
 
     private void recyclerViewConfigModel(String bid) {
+
         libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<DataEntity>());
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
@@ -275,6 +262,24 @@ public class LibraryFragment extends Fragment {
             });notifyDataSetChanged();
         }
 
+        public void lookefor( CharSequence sequence){
+            List<DataEntity> mbooks =new ArrayList<>();
+            String charString = sequence.toString();
+            if (charString.isEmpty()) {
+                mbooks = libraryRecyclerViewAdapter.getBooks();
+            } else {
+                mbooks.clear();
+                List<DataEntity> books_search = new ArrayList<>();
+                for(DataEntity book  : libraryRecyclerViewAdapter.getBooks()){
+                    if(book.getLabel().toUpperCase().contains(charString.toUpperCase())){
+                        books_search.add(book);
+                    }
+                }
+                mbooks= books_search;
+            }
+            books=mbooks;
+            notifyDataSetChanged();
+        }
         @NonNull
         @Override
         public LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -328,6 +333,7 @@ public class LibraryFragment extends Fragment {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
                     recyclerViewConfigModel(books.get(getAdapterPosition()).getId());
                     showMenu();
+                    edt_search.setText("");
                     mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
             }
@@ -338,7 +344,7 @@ public class LibraryFragment extends Fragment {
     class LibraryRecyclerViewModelAdapter
             extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
             implements ItemTouchHelperAdapter{
-        private final List<DataEntity>models;
+        private List<DataEntity>models;
 
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
@@ -362,6 +368,25 @@ public class LibraryFragment extends Fragment {
                     return t1.getLabel().compareTo(dataEntity.getLabel());
                 }
             });notifyDataSetChanged();
+        }
+
+        public void lookefor( CharSequence sequence){
+            List<DataEntity> mModels =new ArrayList<>();
+            String charString = sequence.toString();
+            if (charString.isEmpty()) {
+                mModels = models;
+            } else {
+                mModels.clear();
+                List<DataEntity> models_search = new ArrayList<>();
+                for(DataEntity model  : models){
+                    if(model.getLabel().toUpperCase().contains(charString.toUpperCase())){
+                        models_search.add(model);
+                    }
+                }
+                mModels= models_search;
+            }
+            models=mModels;
+            notifyDataSetChanged();
         }
 
 
