@@ -16,4 +16,5 @@
     <string name="disconnect">Disconnect</string>
     <string name="logoImageDescription">logo</string>
     <string name="personImageDescription">person</string>
+    <string name="fit_image_to_scan">Fit image to scan</string>
 </resources>

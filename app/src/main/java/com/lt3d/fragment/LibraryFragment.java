@@ -165,6 +165,7 @@ public class LibraryFragment extends Fragment {
 
                 for (int i = 1; i < modelData.size() + 1; i++) {
                     mid = "md" + i;
+
                     if (modelData.get(mid) != null) {
                         tmp = new DataEntity(((HashMap) modelData.get(mid)).get("title").toString(), mid);
                         libraryRecyclerViewModelAdapter.addData(tmp);
@@ -258,11 +259,13 @@ public class LibraryFragment extends Fragment {
     class LibraryRecyclerViewModelAdapter
             extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
             implements ItemTouchHelperAdapter{
+        
         private final List<DataEntity>models;
 
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
         }
+
         void addData(DataEntity model){
             models.add(model);
             notifyItemInserted(models.size());
