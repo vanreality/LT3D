@@ -89,7 +89,7 @@ public class LibraryFragment extends Fragment {
                     mbooks.clear();
                     List<DataEntity> books_search = new ArrayList<>();
                     for(DataEntity book  : libraryRecyclerViewAdapter.getBooks()){
-                        if(!(charString.indexOf(book.getLabel())==-1)){
+                        if(book.getLabel().toUpperCase().contains(charString.toUpperCase())){
                             Log.d("lookfor",charString);
                             Log.d("result",""+charString.indexOf(book.getLabel()));
                             books_search.add(book);
@@ -101,6 +101,7 @@ public class LibraryFragment extends Fragment {
                 }
                 libraryRecyclerView.setAdapter(new LibraryRecyclerViewAdapter(mbooks));
             }
+            
             @Override
             public void afterTextChanged(Editable s) {
 
@@ -242,127 +243,7 @@ public class LibraryFragment extends Fragment {
             implements ItemTouchHelperAdapter {
 
         private List<DataEntity> books;
-        private List<DataEntity> mbooks_search = new List<DataEntity>() {
-            @Override
-            public int size() {
-                return 0;
-            }
 
-            @Override
-            public boolean isEmpty() {
-                return false;
-            }
-
-            @Override
-            public boolean contains(@Nullable Object o) {
-                return false;
-            }
-
-            @NonNull
-            @Override
-            public Iterator<DataEntity> iterator() {
-                return null;
-            }
-
-            @Nullable
-            @Override
-            public Object[] toArray() {
-                return new Object[0];
-            }
-
-            @Override
-            public <T> T[] toArray(@Nullable T[] a) {
-                return null;
-            }
-
-            @Override
-            public boolean add(DataEntity dataEntity) {
-                return false;
-            }
-
-            @Override
-            public boolean remove(@Nullable Object o) {
-                return false;
-            }
-
-            @Override
-            public boolean containsAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(@NonNull Collection<? extends DataEntity> c) {
-                return false;
-            }
-
-            @Override
-            public boolean addAll(int index, @NonNull Collection<? extends DataEntity> c) {
-                return false;
-            }
-
-            @Override
-            public boolean removeAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public boolean retainAll(@NonNull Collection<?> c) {
-                return false;
-            }
-
-            @Override
-            public void clear() {
-
-            }
-
-            @Override
-            public DataEntity get(int index) {
-                return null;
-            }
-
-            @Override
-            public DataEntity set(int index, DataEntity element) {
-                return null;
-            }
-
-            @Override
-            public void add(int index, DataEntity element) {
-
-            }
-
-            @Override
-            public DataEntity remove(int index) {
-                return null;
-            }
-
-            @Override
-            public int indexOf(@Nullable Object o) {
-                return 0;
-            }
-
-            @Override
-            public int lastIndexOf(@Nullable Object o) {
-                return 0;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<DataEntity> listIterator() {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public ListIterator<DataEntity> listIterator(int index) {
-                return null;
-            }
-
-            @NonNull
-            @Override
-            public List<DataEntity> subList(int fromIndex, int toIndex) {
-                return null;
-            }
-        };
         LibraryRecyclerViewAdapter(List<DataEntity> books) {
             this.books = books;
         }
@@ -370,10 +251,12 @@ public class LibraryFragment extends Fragment {
         List<DataEntity> getBooks(){
             return this.books;
         }
+
         void addData(DataEntity book) {
             books.add(book);
             notifyItemInserted(books.size());
         }
+
         public void sortBookAZ(){
             Collections.sort(books, new Comparator<DataEntity>() {
                 @Override
@@ -382,6 +265,7 @@ public class LibraryFragment extends Fragment {
                 }
             });notifyDataSetChanged();
         }
+
         public void sortBookZA(){
             Collections.sort(books, new Comparator<DataEntity>() {
                 @Override
@@ -390,156 +274,6 @@ public class LibraryFragment extends Fragment {
                 }
             });notifyDataSetChanged();
         }
-//        public Filter getFilter(){
-//            return new Filter() {
-//                @Override
-//                protected FilterResults performFiltering(CharSequence constraint) {
-//                    String charString = constraint.toString();
-//                    if (charString.isEmpty()) {
-//                        mbooks_search = books;
-//                    } else {
-//                        List<DataEntity> books_search = new List<DataEntity>() {
-//                            @Override
-//                            public int size() {
-//                                return 0;
-//                            }
-//
-//                            @Override
-//                            public boolean isEmpty() {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean contains(@Nullable Object o) {
-//                                return false;
-//                            }
-//
-//                            @NonNull
-//                            @Override
-//                            public Iterator<DataEntity> iterator() {
-//                                return null;
-//                            }
-//
-//                            @Nullable
-//                            @Override
-//                            public Object[] toArray() {
-//                                return new Object[0];
-//                            }
-//
-//                            @Override
-//                            public <T> T[] toArray(@Nullable T[] a) {
-//                                return null;
-//                            }
-//
-//                            @Override
-//                            public boolean add(DataEntity dataEntity) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean remove(@Nullable Object o) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean containsAll(@NonNull Collection<?> c) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean addAll(@NonNull Collection<? extends DataEntity> c) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean addAll(int index, @NonNull Collection<? extends DataEntity> c) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean removeAll(@NonNull Collection<?> c) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public boolean retainAll(@NonNull Collection<?> c) {
-//                                return false;
-//                            }
-//
-//                            @Override
-//                            public void clear() {
-//
-//                            }
-//
-//                            @Override
-//                            public DataEntity get(int index) {
-//                                return null;
-//                            }
-//
-//                            @Override
-//                            public DataEntity set(int index, DataEntity element) {
-//                                return null;
-//                            }
-//
-//                            @Override
-//                            public void add(int index, DataEntity element) {
-//
-//                            }
-//
-//                            @Override
-//                            public DataEntity remove(int index) {
-//                                return null;
-//                            }
-//
-//                            @Override
-//                            public int indexOf(@Nullable Object o) {
-//                                return 0;
-//                            }
-//
-//                            @Override
-//                            public int lastIndexOf(@Nullable Object o) {
-//                                return 0;
-//                            }
-//
-//                            @NonNull
-//                            @Override
-//                            public ListIterator<DataEntity> listIterator() {
-//                                return null;
-//                            }
-//
-//                            @NonNull
-//                            @Override
-//                            public ListIterator<DataEntity> listIterator(int index) {
-//                                return null;
-//                            }
-//
-//                            @NonNull
-//                            @Override
-//                            public List<DataEntity> subList(int fromIndex, int toIndex) {
-//                                return null;
-//                            }
-//                        };
-//                        for(DataEntity book  : books){
-//                            if(book.getLabel().contains(charString)){
-//                                books_search.add(book);
-//                            }
-//                        }
-//                        mbooks_search = books_search;
-//                    }
-//                    FilterResults filterResults = new FilterResults();
-//                    filterResults.values = mbooks_search;
-//                    return filterResults;
-//                }
-//
-//                @Override
-//                protected void publishResults(CharSequence constraint, FilterResults results) {
-//
-//                   books=(List<DataEntity>)results.values;
-//                    mbooks_search.addAll((List<DataEntity>)results.values);
-//                    notifyDataSetChanged();
-//                }
-//            };
-//        }
 
         @NonNull
         @Override
