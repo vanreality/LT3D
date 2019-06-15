@@ -30,6 +30,8 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 
@@ -91,12 +93,16 @@ public class LibraryFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        this.recyclerViewConfig();
-        item.setVisible(false);
+        switch (item.getItemId()) {
+            case R.id.menu_goback:
+                this.recyclerViewConfig() ;
+                item.setVisible(false);
+                break;
+            case R.id.menu_sort:
+                libraryRecyclerViewAdapter.sortBook();
 
-        return super.onOptionsItemSelected(item);
+        }return super.onOptionsItemSelected(item);
     }
-
     private void showMenu(){
         if(!myMenu.equals(null))
             myMenu.getItem(0).setVisible(true);
@@ -191,6 +197,15 @@ public class LibraryFragment extends Fragment {
             books.add(book);
             notifyItemInserted(books.size());
         }
+        public void sortBook(){
+            Collections.sort(books, new Comparator<DataEntity>() {
+                @Override
+                public int compare(DataEntity dataEntity, DataEntity t1) {
+                    return dataEntity.getLabel().compareTo(t1.getLabel());
+                }
+            });notifyDataSetChanged();
+        }
+
 
         @NonNull
         @Override

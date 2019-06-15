@@ -9,6 +9,9 @@
         android:visible="false"
         app:showAsAction="always" />
 
-
+    <item
+        android:id="@+id/menu_sort"
+        android:text="AZ"
+        android:title="" />
 
 </menu>
