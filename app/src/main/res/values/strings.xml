@@ -16,4 +16,7 @@
     <string name="disconnect">Disconnect</string>
     <string name="logoImageDescription">logo</string>
     <string name="personImageDescription">person</string>
+    <string name="add_book">add_book</string>
+    <string name="a_to_z">A to Z</string>
+    <string name="z_to_a">Z to A</string>
 </resources>
