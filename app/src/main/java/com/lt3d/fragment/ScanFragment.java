@@ -11,23 +11,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.AugmentedImageDatabase;
 import com.google.ar.core.Config;
 import com.google.ar.core.Frame;
 import com.google.ar.core.Session;
+import com.google.ar.core.TrackingState;
+import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.lt3d.R;
+import com.lt3d.tools.scanImage.AugmentedImageNode;
 import com.lt3d.tools.scanImage.SnackbarHelper;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ScanFragment extends ArFragment {
 
@@ -75,12 +84,15 @@ public class ScanFragment extends ArFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view =  super.onCreateView(inflater, container, savedInstanceState);
+        //View view =  super.onCreateView(inflater, container, savedInstanceState);
+        View view = inflater.inflate(R.layout.fragment_scan, container, false);
         getPlaneDiscoveryController().hide();
         getPlaneDiscoveryController().setInstructionView(null);
         getArSceneView().getPlaneRenderer().setEnabled(false);
+
         return view;
     }
+
 
     @Override
     protected Config getSessionConfiguration(Session session) {
@@ -141,4 +153,5 @@ public class ScanFragment extends ArFragment {
         }
         return null;
     }
+
 }
