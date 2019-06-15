@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -44,6 +46,7 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
+    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -98,6 +101,14 @@ public class LibraryFragment extends Fragment {
             case android.R.id.home:
                 recyclerViewConfig();
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                return true;
+                //TODO: 补全add功能
+            case R.id.menu_add:
+                return true;
+            case R.id.menu_sortAZ:
+                return true;
+            case R.id.menu_sortZA:
+                return true;
         }
 
         return super.onOptionsItemSelected(item);

@@ -12,13 +12,11 @@ import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.Arrays;
