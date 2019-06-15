@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_scan:
                     changeFragment(new ScanFragment());
-                    arFragmentConfig();
+//                    arFragmentConfig();
                     return true;
                 case R.id.navigation_setting:
                     changeFragment(new SettingFragment());

@@ -259,7 +259,7 @@ public class LibraryFragment extends Fragment {
     class LibraryRecyclerViewModelAdapter
             extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
             implements ItemTouchHelperAdapter{
-        
+
         private final List<DataEntity>models;
 
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
@@ -286,7 +286,7 @@ public class LibraryFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return models==null?0:models.size();
+            return models == null ? 0 : models.size();
         }
 
         @Override
