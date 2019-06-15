@@ -9,6 +9,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.core.Frame;
 import com.google.ar.core.TrackingState;
+import com.google.ar.sceneform.ArSceneView;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.firebase.auth.FirebaseAuth;
@@ -25,6 +26,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -114,8 +116,8 @@ public class MainActivity extends AppCompatActivity {
                     changeFragment(new LibraryFragment());
                     return true;
                 case R.id.navigation_scan:
-                    changeFragment(new ScanFragment());
-//                    arFragmentConfig();
+//                    changeFragment(new ScanFragment());
+                    arFragmentConfig();
                     return true;
                 case R.id.navigation_setting:
                     changeFragment(new SettingFragment());
@@ -132,9 +134,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void arFragmentConfig() {
-        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
-        fitToScanView = findViewById(R.id.image_view_fit_to_scan);
+        LayoutInflater factory = LayoutInflater.from(this);
+        View view = factory.inflate(R.layout.fragment_scan, null);
 
+        arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+        fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
     }
 

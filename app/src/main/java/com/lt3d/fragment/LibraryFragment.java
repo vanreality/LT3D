@@ -14,6 +14,8 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,9 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -44,6 +49,7 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
+    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -98,11 +104,24 @@ public class LibraryFragment extends Fragment {
             case android.R.id.home:
                 recyclerViewConfig();
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                return true;
+                //TODO: 补全add功能
+            case R.id.menu_add:
+                return true;
+            case R.id.menu_sortAZ:
+                if(libraryRecyclerViewModelAdapter!=null)
+                    libraryRecyclerViewModelAdapter.sortModelAZ();
+                libraryRecyclerViewAdapter.sortBookAZ();
+                return true;
+            case R.id.menu_sortZA:
+                if(libraryRecyclerViewModelAdapter!=null)
+                    libraryRecyclerViewModelAdapter.sortModelZA();
+                libraryRecyclerViewAdapter.sortBookZA();
+                return true;
         }
 
         return super.onOptionsItemSelected(item);
     }
-
     private void showMenu(){
         myMenu.getItem(0).setVisible(true);
     }
@@ -195,6 +214,22 @@ public class LibraryFragment extends Fragment {
             books.add(book);
             notifyItemInserted(books.size());
         }
+        public void sortBookAZ(){
+            Collections.sort(books, new Comparator<DataEntity>() {
+                @Override
+                public int compare(DataEntity dataEntity, DataEntity t1) {
+                    return dataEntity.getLabel().compareTo(t1.getLabel());
+                }
+            });notifyDataSetChanged();
+        }
+        public void sortBookZA(){
+            Collections.sort(books, new Comparator<DataEntity>() {
+                @Override
+                public int compare(DataEntity dataEntity, DataEntity t1) {
+                    return t1.getLabel().compareTo(dataEntity.getLabel());
+                }
+            });notifyDataSetChanged();
+        }
 
         @NonNull
         @Override
@@ -269,6 +304,22 @@ public class LibraryFragment extends Fragment {
         void addData(DataEntity model){
             models.add(model);
             notifyItemInserted(models.size());
+        }
+        public void sortModelAZ(){
+            Collections.sort(models, new Comparator<DataEntity>() {
+                @Override
+                public int compare(DataEntity dataEntity, DataEntity t1) {
+                    return dataEntity.getLabel().compareTo(t1.getLabel());
+                }
+            });notifyDataSetChanged();
+        }
+        public void sortModelZA(){
+            Collections.sort(models, new Comparator<DataEntity>() {
+                @Override
+                public int compare(DataEntity dataEntity, DataEntity t1) {
+                    return t1.getLabel().compareTo(dataEntity.getLabel());
+                }
+            });notifyDataSetChanged();
         }
 
         @NonNull
