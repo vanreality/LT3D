@@ -8,26 +8,22 @@ import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
-import com.lt3d.tools.retrofit.Service;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.MenuItem;
 
 import java.util.Arrays;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private User user;
-    private static FirebaseUser currentUser;
+    private FirebaseUser currentUser;
     BottomNavigationView navView;
     private static final int RC_SIGN_IN = 123;
 
@@ -42,9 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void init() {
         navView = findViewById(R.id.nav_view);
-
-        changeFragment(new LibraryFragment());
-
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
@@ -80,10 +73,7 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                Log.d("getUser", currentUser.getDisplayName());
-                Log.d("getUser", currentUser.getEmail());
-                Log.d("getUser", currentUser.getUid());
-                init();
+                changeFragment(new LibraryFragment());
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -126,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
         overridePendingTransition(0, 0);
     }
 
-    public static FirebaseUser getCurrentUser() {
+    public FirebaseUser getCurrentUser() {
         return currentUser;
     }
 }
