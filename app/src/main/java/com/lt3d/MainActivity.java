@@ -1,5 +1,6 @@
 package com.lt3d;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -17,7 +18,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import java.util.Arrays;
 import java.util.List;
@@ -36,9 +40,11 @@ public class MainActivity extends AppCompatActivity {
         createFirebaseSignInIntent();
     }
 
+
     private void init() {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     public void createFirebaseSignInIntent() {
