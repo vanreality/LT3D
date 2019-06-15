@@ -24,10 +24,6 @@ android {
         }
     }
 
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
-    }
     sourceSets { main { assets.srcDirs = ['src/main/assets', 'src/main/assets/'] } }
 }
 
@@ -64,10 +60,3 @@ dependencies {
 }
 
 apply plugin: 'com.google.gms.google-services'
-apply plugin: 'com.google.ar.sceneform.plugin'
-
-
-sceneform.asset('sampledata/dog/12228_Dog_v1_L2.obj',
-        'default',
-        'sampledata/dog/12228_Dog_v1_L2.sfa',
-        'src/main/assets/12228_Dog_v1_L2')

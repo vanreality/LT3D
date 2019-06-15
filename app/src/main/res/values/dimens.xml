@@ -8,10 +8,14 @@
     <dimen name="fragment_lib_marginTop">10dp</dimen>
     <dimen name="fragment_lib_marginRight">5dp</dimen>
     <dimen name="book_height">100dp</dimen>
-    <dimen name="book_marginTop">15dp</dimen>
+    <dimen name="book_marginTop">10dp</dimen>
     <dimen name="book_marginBottom">10dp</dimen>
     <dimen name="book_marginLR">15dp</dimen>
     <dimen name="bookName_size">20sp</dimen>
     <dimen name="shape_padding">2dp</dimen>
     <dimen name="book_radius">15dp</dimen>
+    <dimen name="botton_radius">15dp</dimen>
+    <dimen name="booton_marginLR">15dp</dimen>
+    <dimen name="image_text_padding">15dp</dimen>
+    <dimen name="book_imagePadding">25dp</dimen>
 </resources>
