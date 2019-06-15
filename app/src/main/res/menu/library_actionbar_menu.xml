@@ -22,9 +22,5 @@
         app:showAsAction="never" />
 
 
-    <item
-        android:id="@+id/menu_sort"
-        android:text="AZ"
-        android:title="" />
 
 </menu>

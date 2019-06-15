@@ -368,6 +368,9 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO Open sceneForm fragment
+
+
+
             }
         }
     }
