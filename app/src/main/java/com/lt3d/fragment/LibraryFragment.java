@@ -2,7 +2,8 @@ package com.lt3d.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,12 +11,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,7 +36,9 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Objects;
 
 public class LibraryFragment extends Fragment {
@@ -49,7 +51,6 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
-    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +72,22 @@ public class LibraryFragment extends Fragment {
 
         setHasOptionsMenu(true);
         recyclerViewConfig();
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence sequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
+                libraryRecyclerViewAdapter.getFilter().filter(sequence.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     class DataEntity {
@@ -205,6 +222,127 @@ public class LibraryFragment extends Fragment {
             implements ItemTouchHelperAdapter {
 
         private final List<DataEntity> books;
+        private List<DataEntity> mbooks_search = new List<DataEntity>() {
+            @Override
+            public int size() {
+                return 0;
+            }
+
+            @Override
+            public boolean isEmpty() {
+                return false;
+            }
+
+            @Override
+            public boolean contains(@Nullable Object o) {
+                return false;
+            }
+
+            @NonNull
+            @Override
+            public Iterator<DataEntity> iterator() {
+                return null;
+            }
+
+            @Nullable
+            @Override
+            public Object[] toArray() {
+                return new Object[0];
+            }
+
+            @Override
+            public <T> T[] toArray(@Nullable T[] a) {
+                return null;
+            }
+
+            @Override
+            public boolean add(DataEntity dataEntity) {
+                return false;
+            }
+
+            @Override
+            public boolean remove(@Nullable Object o) {
+                return false;
+            }
+
+            @Override
+            public boolean containsAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(@NonNull Collection<? extends DataEntity> c) {
+                return false;
+            }
+
+            @Override
+            public boolean addAll(int index, @NonNull Collection<? extends DataEntity> c) {
+                return false;
+            }
+
+            @Override
+            public boolean removeAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public boolean retainAll(@NonNull Collection<?> c) {
+                return false;
+            }
+
+            @Override
+            public void clear() {
+
+            }
+
+            @Override
+            public DataEntity get(int index) {
+                return null;
+            }
+
+            @Override
+            public DataEntity set(int index, DataEntity element) {
+                return null;
+            }
+
+            @Override
+            public void add(int index, DataEntity element) {
+
+            }
+
+            @Override
+            public DataEntity remove(int index) {
+                return null;
+            }
+
+            @Override
+            public int indexOf(@Nullable Object o) {
+                return 0;
+            }
+
+            @Override
+            public int lastIndexOf(@Nullable Object o) {
+                return 0;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<DataEntity> listIterator() {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public ListIterator<DataEntity> listIterator(int index) {
+                return null;
+            }
+
+            @NonNull
+            @Override
+            public List<DataEntity> subList(int fromIndex, int toIndex) {
+                return null;
+            }
+        };
         LibraryRecyclerViewAdapter(List<DataEntity> books) {
             this.books = books;
         }
@@ -228,6 +366,154 @@ public class LibraryFragment extends Fragment {
                     return t1.getLabel().compareTo(dataEntity.getLabel());
                 }
             });notifyDataSetChanged();
+        }
+        public Filter getFilter(){
+            return new Filter() {
+                @Override
+                protected FilterResults performFiltering(CharSequence constraint) {
+                    String charString = constraint.toString();
+                    if (charString.isEmpty()) {
+                        mbooks_search = books;
+                    } else {
+                        List<DataEntity> books_search = new List<DataEntity>() {
+                            @Override
+                            public int size() {
+                                return 0;
+                            }
+
+                            @Override
+                            public boolean isEmpty() {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean contains(@Nullable Object o) {
+                                return false;
+                            }
+
+                            @NonNull
+                            @Override
+                            public Iterator<DataEntity> iterator() {
+                                return null;
+                            }
+
+                            @Nullable
+                            @Override
+                            public Object[] toArray() {
+                                return new Object[0];
+                            }
+
+                            @Override
+                            public <T> T[] toArray(@Nullable T[] a) {
+                                return null;
+                            }
+
+                            @Override
+                            public boolean add(DataEntity dataEntity) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean remove(@Nullable Object o) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean containsAll(@NonNull Collection<?> c) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean addAll(@NonNull Collection<? extends DataEntity> c) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean addAll(int index, @NonNull Collection<? extends DataEntity> c) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean removeAll(@NonNull Collection<?> c) {
+                                return false;
+                            }
+
+                            @Override
+                            public boolean retainAll(@NonNull Collection<?> c) {
+                                return false;
+                            }
+
+                            @Override
+                            public void clear() {
+
+                            }
+
+                            @Override
+                            public DataEntity get(int index) {
+                                return null;
+                            }
+
+                            @Override
+                            public DataEntity set(int index, DataEntity element) {
+                                return null;
+                            }
+
+                            @Override
+                            public void add(int index, DataEntity element) {
+
+                            }
+
+                            @Override
+                            public DataEntity remove(int index) {
+                                return null;
+                            }
+
+                            @Override
+                            public int indexOf(@Nullable Object o) {
+                                return 0;
+                            }
+
+                            @Override
+                            public int lastIndexOf(@Nullable Object o) {
+                                return 0;
+                            }
+
+                            @NonNull
+                            @Override
+                            public ListIterator<DataEntity> listIterator() {
+                                return null;
+                            }
+
+                            @NonNull
+                            @Override
+                            public ListIterator<DataEntity> listIterator(int index) {
+                                return null;
+                            }
+
+                            @NonNull
+                            @Override
+                            public List<DataEntity> subList(int fromIndex, int toIndex) {
+                                return null;
+                            }
+                        };
+                        for(DataEntity book  : books){
+                            if(book.getLabel().contains(charString)){
+                                books_search.add(book);
+                            }
+                        }
+                        mbooks_search = books_search;
+                    }
+                    FilterResults filterResults = new FilterResults();
+                    filterResults.values = mbooks_search;
+                    return filterResults;
+                }
+
+                @Override
+                protected void publishResults(CharSequence constraint, FilterResults results) {
+                    mbooks_search = (List<DataEntity>)results.values;
+                    notifyDataSetChanged();
+                }
+            };
         }
 
         @NonNull
@@ -318,6 +604,7 @@ public class LibraryFragment extends Fragment {
                 }
             });notifyDataSetChanged();
         }
+
 
         @NonNull
         @Override
