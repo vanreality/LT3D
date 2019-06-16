@@ -1,6 +1,7 @@
 package com.lt3d.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -437,7 +438,10 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO Open sceneForm fragment
-
+                Intent i=new Intent();
+                i.setClass(getActivity(), com.lt3d.ModelActivity.class);
+                i.putExtra("modelName",models.get(getAdapterPosition()).getLabel());
+                startActivity(i);
 
 
             }
