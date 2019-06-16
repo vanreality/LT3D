@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.Toast;
@@ -17,16 +18,19 @@ import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.math.Quaternion;
-import com.google.ar.sceneform.math.Vector3;
+import com.google.ar.sceneform.ArSceneView;
+
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
 
 public class ModelActivity extends AppCompatActivity {
 
+    private GestureDetector gestureDetector;
+    private ArSceneView arSceneView;
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
+    boolean hasPlacedSolarSystem =false;
     private String nameModel;
 
     @Override
@@ -54,6 +58,9 @@ public class ModelActivity extends AppCompatActivity {
                             return null;
                         });
 
+
+
+
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     if (modelRenderable == null) {
@@ -77,10 +84,7 @@ public class ModelActivity extends AppCompatActivity {
 
                 });
 
-
     }
-
-
 
 
 
