@@ -66,11 +66,11 @@ sceneform.asset('sampledata/dog/12228_Dog_v1_L2.obj',
         'sampledata/dog/12228_Dog_v1_L2.sfa',
         'src/main/assets/dog/12228_Dog_v1_L2')
 
-//sceneform.asset('sampledata/models/frame_lower_left.obj',
-//        'default',
-//        'sampledata/models/frame_lower_left.sfa',
-//        'src/main/assets/model/frame_lower_left')
-//
+sceneform.asset('sampledata/models/frame_lower_left.obj',
+        'default',
+        'sampledata/models/frame_lower_left.sfa',
+        'src/main/assets/model/frame_lower_left')
+
 //sceneform.asset('sampledata/models/frame_lower_right.obj',
 //        'default',
 //        'sampledata/models/frame_lower_right.sfa',
