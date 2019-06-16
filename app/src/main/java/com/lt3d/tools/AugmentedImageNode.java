@@ -55,7 +55,7 @@ public class AugmentedImageNode extends AnchorNode {
 
   public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
-    if(nodeName == "default.img"){
+    if(nodeName == "default.jpg"){
       if (ulCorner == null) {
         ulCorner =
                 ModelRenderable.builder()
