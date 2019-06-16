@@ -1,10 +1,10 @@
 package com.lt3d.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -34,7 +33,6 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -437,7 +435,10 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO Open sceneForm fragment
-
+                Intent i=new Intent();
+                i.setClass(getActivity(), com.lt3d.ModelActivity.class);
+                i.putExtra("modelName",models.get(getAdapterPosition()).getLabel());
+                startActivity(i);
 
 
             }
