@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,8 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,7 +31,6 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -51,7 +47,6 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
-    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -81,10 +76,9 @@ public class LibraryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
-
-                libraryRecyclerViewAdapter.lookefor(sequence);
-                if(libraryRecyclerViewModelAdapter!=null)
-                libraryRecyclerViewModelAdapter.lookefor(sequence);
+                libraryRecyclerViewAdapter.search(sequence);
+                if(libraryRecyclerViewModelAdapter != null)
+                libraryRecyclerViewModelAdapter.search(sequence);
             }
 
             @Override
@@ -227,9 +221,11 @@ public class LibraryFragment extends Fragment {
             implements ItemTouchHelperAdapter {
 
         private List<DataEntity> books;
+        private List<DataEntity> books_tmp;
 
         LibraryRecyclerViewAdapter(List<DataEntity> books) {
             this.books = books;
+            this.books_tmp = books;
         }
 
         List<DataEntity> getBooks(){
@@ -259,7 +255,8 @@ public class LibraryFragment extends Fragment {
             });notifyDataSetChanged();
         }
 
-        public void lookefor( CharSequence sequence){
+        public void search(CharSequence sequence){
+            books = books_tmp;
             List<DataEntity> mbooks =new ArrayList<>();
             String charString = sequence.toString();
             if (charString.isEmpty()) {
@@ -342,9 +339,11 @@ public class LibraryFragment extends Fragment {
             extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
             implements ItemTouchHelperAdapter{
         private List<DataEntity>models;
+        private List<DataEntity>models_tmp;
 
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
+            this.models_tmp = models;
         }
 
         void addData(DataEntity model){
@@ -368,7 +367,8 @@ public class LibraryFragment extends Fragment {
             });notifyDataSetChanged();
         }
 
-        public void lookefor( CharSequence sequence){
+        public void search(CharSequence sequence){
+            models = models_tmp;
             List<DataEntity> mModels =new ArrayList<>();
             String charString = sequence.toString();
             if (charString.isEmpty()) {
