@@ -41,6 +41,7 @@ public class AugmentedImageNode extends AnchorNode {
   // The augmented image represented by this node.
   private AugmentedImage image;
   private String imgName;
+  private String nodeName;
 
   // Models of the 4 corners.  We use completable futures here to simplify
   // the error handling and asynchronous loading.  The loading is started with the
@@ -52,35 +53,37 @@ public class AugmentedImageNode extends AnchorNode {
 
   private static CompletableFuture<ModelRenderable> dog;
 
-  public AugmentedImageNode(Context context) {
+  public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
-    if (ulCorner == null) {
-      ulCorner =
-          ModelRenderable.builder()
-              .setSource(context, Uri.parse("model/frame_upper_left.sfb"))
-              .build();
-      urCorner =
-          ModelRenderable.builder()
-              .setSource(context, Uri.parse("model/frame_upper_right.sfb"))
-              .build();
-      llCorner =
-          ModelRenderable.builder()
-              .setSource(context, Uri.parse("model/frame_lower_left.sfb"))
-              .build();
-      lrCorner =
-          ModelRenderable.builder()
-              .setSource(context, Uri.parse("model/frame_lower_right.sfb"))
-              .build();
+    if(nodeName == "default.img"){
+      if (ulCorner == null) {
+        ulCorner =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse("model/frame_upper_left.sfb"))
+                        .build();
+        urCorner =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse("model/frame_upper_right.sfb"))
+                        .build();
+        llCorner =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse("model/frame_lower_left.sfb"))
+                        .build();
+        lrCorner =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse("model/frame_lower_right.sfb"))
+                        .build();
+      }
     }
 
-    if(dog == null){
-      dog =
-              ModelRenderable.builder()
-              .setSource(context, Uri.parse("dog/12228_Dog_v1_L2.sfb"))
-              .build();
+    else if(nodeName == "dog.png"){
+      if(dog == null){
+        dog =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse("dog/12228_Dog_v1_L2.sfb"))
+                        .build();
+      }
     }
-
-
   }
 
   /**
