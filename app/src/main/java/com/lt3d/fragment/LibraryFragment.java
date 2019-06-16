@@ -2,7 +2,8 @@ package com.lt3d.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -14,8 +15,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,7 +31,6 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -49,7 +47,6 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
-    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -71,6 +68,24 @@ public class LibraryFragment extends Fragment {
 
         setHasOptionsMenu(true);
         recyclerViewConfig();
+        edt_search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence sequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
+                libraryRecyclerViewAdapter.search(sequence);
+                if(libraryRecyclerViewModelAdapter != null)
+                libraryRecyclerViewModelAdapter.search(sequence);
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     class DataEntity {
@@ -103,6 +118,7 @@ public class LibraryFragment extends Fragment {
         switch (item.getItemId()) {
             case android.R.id.home:
                 recyclerViewConfig();
+                edt_search.setText("");
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 return true;
                 //TODO: 补全add功能
@@ -184,7 +200,6 @@ public class LibraryFragment extends Fragment {
 
                 for (int i = 1; i < modelData.size() + 1; i++) {
                     mid = "md" + i;
-
                     if (modelData.get(mid) != null) {
                         tmp = new DataEntity(((HashMap) modelData.get(mid)).get("title").toString(), mid);
                         libraryRecyclerViewModelAdapter.addData(tmp);
@@ -205,15 +220,23 @@ public class LibraryFragment extends Fragment {
             extends RecyclerView.Adapter<LibraryRecyclerViewAdapter.LibraryViewHolder>
             implements ItemTouchHelperAdapter {
 
-        private final List<DataEntity> books;
+        private List<DataEntity> books;
+        private List<DataEntity> books_tmp;
+
         LibraryRecyclerViewAdapter(List<DataEntity> books) {
             this.books = books;
+            this.books_tmp = books;
+        }
+
+        List<DataEntity> getBooks(){
+            return this.books;
         }
 
         void addData(DataEntity book) {
             books.add(book);
             notifyItemInserted(books.size());
         }
+
         public void sortBookAZ(){
             Collections.sort(books, new Comparator<DataEntity>() {
                 @Override
@@ -222,6 +245,7 @@ public class LibraryFragment extends Fragment {
                 }
             });notifyDataSetChanged();
         }
+
         public void sortBookZA(){
             Collections.sort(books, new Comparator<DataEntity>() {
                 @Override
@@ -231,6 +255,25 @@ public class LibraryFragment extends Fragment {
             });notifyDataSetChanged();
         }
 
+        public void search(CharSequence sequence){
+            books = books_tmp;
+            List<DataEntity> mbooks =new ArrayList<>();
+            String charString = sequence.toString();
+            if (charString.isEmpty()) {
+                mbooks = libraryRecyclerViewAdapter.getBooks();
+            } else {
+                mbooks.clear();
+                List<DataEntity> books_search = new ArrayList<>();
+                for(DataEntity book  : libraryRecyclerViewAdapter.getBooks()){
+                    if(book.getLabel().toUpperCase().contains(charString.toUpperCase())){
+                        books_search.add(book);
+                    }
+                }
+                mbooks= books_search;
+            }
+            books=mbooks;
+            notifyDataSetChanged();
+        }
         @NonNull
         @Override
         public LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -284,6 +327,7 @@ public class LibraryFragment extends Fragment {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
                     recyclerViewConfigModel(books.get(getAdapterPosition()).getId());
                     showMenu();
+                    edt_search.setText("");
                     mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 }
             }
@@ -294,11 +338,12 @@ public class LibraryFragment extends Fragment {
     class LibraryRecyclerViewModelAdapter
             extends RecyclerView.Adapter<LibraryRecyclerViewModelAdapter.LibraryViewModelHolder>
             implements ItemTouchHelperAdapter{
-
-        private final List<DataEntity>models;
+        private List<DataEntity>models;
+        private List<DataEntity>models_tmp;
 
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
+            this.models_tmp = models;
         }
 
         void addData(DataEntity model){
@@ -321,6 +366,27 @@ public class LibraryFragment extends Fragment {
                 }
             });notifyDataSetChanged();
         }
+
+        public void search(CharSequence sequence){
+            models = models_tmp;
+            List<DataEntity> mModels =new ArrayList<>();
+            String charString = sequence.toString();
+            if (charString.isEmpty()) {
+                mModels = models;
+            } else {
+                mModels.clear();
+                List<DataEntity> models_search = new ArrayList<>();
+                for(DataEntity model  : models){
+                    if(model.getLabel().toUpperCase().contains(charString.toUpperCase())){
+                        models_search.add(model);
+                    }
+                }
+                mModels= models_search;
+            }
+            models=mModels;
+            notifyDataSetChanged();
+        }
+
 
         @NonNull
         @Override
@@ -371,6 +437,9 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //TODO Open sceneForm fragment
+
+
+
             }
         }
     }

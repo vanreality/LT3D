@@ -1,17 +1,13 @@
 package com.lt3d;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
 import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.IdpResponse;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.ar.core.AugmentedImage;
-import com.google.ar.core.Frame;
-import com.google.ar.core.TrackingState;
-import com.google.ar.sceneform.ArSceneView;
-import com.google.ar.sceneform.FrameTime;
-import com.google.ar.sceneform.ux.ArFragment;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.lt3d.fragment.LibraryFragment;
@@ -25,6 +21,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.view.Gravity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
