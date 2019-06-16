@@ -35,15 +35,14 @@ public class ScanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_scan, container, false);
+        LayoutInflater factory = LayoutInflater.from(getContext());
+        view = factory.inflate(R.layout.fragment_scan, null);
+//        view = inflater.inflate(R.layout.fragment_scan, container, false);
         arFragmentConfig();
         return view;
     }
 
     private void arFragmentConfig() {
-//        LayoutInflater factory = LayoutInflater.from(getContext());
-//        View view = factory.inflate(R.layout.fragment_scan, null);
-
         arFragment = (ArFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
