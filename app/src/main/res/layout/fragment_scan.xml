@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/fragment_scan">
 
-    <fragment 
+    <fragment
         android:name="com.lt3d.fragment.AugmentedImageFragment"
         android:id="@+id/ux_fragment"
         android:layout_width="match_parent"
