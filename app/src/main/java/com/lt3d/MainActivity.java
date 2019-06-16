@@ -38,6 +38,9 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
     BottomNavigationView navView;
     private static final int RC_SIGN_IN = 123;
+    LibraryFragment libraryFragment;
+    ScanFragment scanFragment;
+    SettingFragment settingFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,10 @@ public class MainActivity extends AppCompatActivity {
     private void init() {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        libraryFragment = new LibraryFragment();
+        scanFragment = new ScanFragment();
+        settingFragment = new SettingFragment();
     }
 
     public void createFirebaseSignInIntent() {
@@ -85,7 +92,8 @@ public class MainActivity extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                changeFragment(new LibraryFragment());
+
+                changeFragment(libraryFragment);
             } else {
                 // Sign in failed. If response is null the user canceled the
                 // sign-in flow using the back button. Otherwise check
@@ -103,13 +111,13 @@ public class MainActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_library:
-                    changeFragment(new LibraryFragment());
+                    changeFragment(libraryFragment);
                     return true;
                 case R.id.navigation_scan:
-                    changeFragment(new ScanFragment());
+                    changeFragment(scanFragment);
                     return true;
                 case R.id.navigation_setting:
-                    changeFragment(new SettingFragment());
+                    changeFragment(settingFragment);
                     return true;
             }
             return false;

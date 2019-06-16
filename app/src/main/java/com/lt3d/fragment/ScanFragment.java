@@ -1,6 +1,7 @@
 package com.lt3d.fragment;
 
 import android.os.Bundle;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +37,18 @@ public class ScanFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         LayoutInflater factory = LayoutInflater.from(getContext());
-        view = factory.inflate(R.layout.fragment_scan, null);
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = factory.inflate(R.layout.fragment_scan, null);
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
+
 //        view = inflater.inflate(R.layout.fragment_scan, container, false);
         arFragmentConfig();
         return view;
