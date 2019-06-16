@@ -1,7 +1,7 @@
 package com.lt3d.fragment;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import com.google.ar.core.Frame;
 import com.google.ar.core.TrackingState;
 import com.google.ar.sceneform.FrameTime;
 import com.google.ar.sceneform.ux.ArFragment;
-import com.lt3d.MainActivity;
 import com.lt3d.R;
 import com.lt3d.tools.Alert;
 import com.lt3d.tools.AugmentedImageNode;
@@ -29,7 +28,6 @@ public class ScanFragment extends Fragment {
     private ArFragment arFragment;
     private ImageView fitToScanView;
     private View view;
-    MainActivity mainActivity;
 
     // Augmented image and its associated center pose anchor, keyed by the augmented image in
     // the database.
@@ -38,18 +36,26 @@ public class ScanFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_scan, container, false);
+        LayoutInflater factory = LayoutInflater.from(getContext());
+
+        if (view != null) {
+            ViewGroup parent = (ViewGroup) view.getParent();
+            if (parent != null)
+                parent.removeView(view);
+        }
+        try {
+            view = factory.inflate(R.layout.fragment_scan, null);
+        } catch (InflateException e) {
+            /* map is already there, just return view as it is */
+        }
+
+//        view = inflater.inflate(R.layout.fragment_scan, container, false);
         arFragmentConfig();
         return view;
     }
 
-
-
     private void arFragmentConfig() {
-//        LayoutInflater factory = LayoutInflater.from(getContext());
-//        View view = factory.inflate(R.layout.fragment_scan, null);
-
-        arFragment = (ArFragment)getActivity().getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+        arFragment = (ArFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
     }
