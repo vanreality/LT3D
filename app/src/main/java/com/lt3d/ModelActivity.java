@@ -76,7 +76,6 @@ public class ModelActivity extends AppCompatActivity {
 
                     //set rotation in direction (x,y,z) in degrees 90
                     //node.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 90f));
-
                     node.setParent(anchorNode);
                     node.setRenderable(modelRenderable);
                     node.select();
