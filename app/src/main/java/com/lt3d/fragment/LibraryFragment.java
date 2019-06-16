@@ -12,11 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Filter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -37,9 +38,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Objects;
 
 public class LibraryFragment extends Fragment {
@@ -52,6 +51,7 @@ public class LibraryFragment extends Fragment {
     private ValueEventListener valueEventListener;
     private Menu myMenu;
     private MainActivity mainActivity;
+    private Toolbar mToolbar;
 
     @Override
     public void onAttach(Context context) {
@@ -111,8 +111,6 @@ public class LibraryFragment extends Fragment {
             return id;
         }
     }
-
-
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -188,7 +186,6 @@ public class LibraryFragment extends Fragment {
     }
 
     private void recyclerViewConfigModel(String bid) {
-
         libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<DataEntity>());
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
         libraryRecyclerView.setAdapter(libraryRecyclerViewModelAdapter);
@@ -349,6 +346,7 @@ public class LibraryFragment extends Fragment {
         LibraryRecyclerViewModelAdapter(List<DataEntity> models) {
             this.models = models;
         }
+
         void addData(DataEntity model){
             models.add(model);
             notifyItemInserted(models.size());
@@ -405,7 +403,7 @@ public class LibraryFragment extends Fragment {
 
         @Override
         public int getItemCount() {
-            return models==null?0:models.size();
+            return models == null ? 0 : models.size();
         }
 
         @Override
