@@ -1,5 +1,6 @@
 package com.lt3d.fragment;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -83,10 +84,23 @@ public class ScanFragment extends Fragment {
                     // Have to switch to UI Thread to update View.
                     fitToScanView.setVisibility(View.GONE);
 
+                    if(augmentedImage.getName().equals("default.jpg")){
+                        AugmentedImageNode node = new AugmentedImageNode(getContext(),"default.jpg");
+                        node.setImage(augmentedImage,"default.jpg");
+                        arFragment.getArSceneView().getScene().addChild(node);
+                    }
+                    else
+                    {
+                        if(augmentedImage.getName().equals("dog.png")){
+                            AugmentedImageNode node = new AugmentedImageNode(getContext(),"dog.png");
+                            node.setImage(augmentedImage,"dog.png");
+                            arFragment.getArSceneView().getScene().addChild(node);
+                        }
+                    }
                     // Create a new anchor for newly found images.
                     if (!augmentedImageMap.containsKey(augmentedImage)) {
-                        AugmentedImageNode node = new AugmentedImageNode(getContext());
-                        node.setImage(augmentedImage);
+                        AugmentedImageNode node = new AugmentedImageNode(getContext(),"add");
+                        node.setImage(augmentedImage,"add");
                         augmentedImageMap.put(augmentedImage, node);
                         arFragment.getArSceneView().getScene().addChild(node);
                     }

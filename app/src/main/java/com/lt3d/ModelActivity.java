@@ -46,7 +46,7 @@ public class ModelActivity extends AppCompatActivity {
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);
 
         ModelRenderable.builder()
-                .setSource(this, Uri.parse("frame_lower_left.sfb"))
+                .setSource(this, Uri.parse("model/frame_lower_left.sfb"))
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable)
                 .exceptionally(
