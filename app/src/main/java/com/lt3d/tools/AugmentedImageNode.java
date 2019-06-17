@@ -23,6 +23,7 @@ import android.util.Log;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
@@ -53,9 +54,6 @@ public class AugmentedImageNode extends AnchorNode {
 //  private static CompletableFuture<ModelRenderable> llCorner;
 
   private static CompletableFuture<ModelRenderable> myModel;
-  private static CompletableFuture<ModelRenderable> dog;
-  private static CompletableFuture<ModelRenderable> skull;
-
 
   public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
@@ -63,9 +61,28 @@ public class AugmentedImageNode extends AnchorNode {
     if(nodeName.equals("dog.png")){
       nameSfb ="dog/12228_Dog_v1_L2.sfb";
     }
+
     else if (nodeName.equals("skull3.jpg")){
       nameSfb = "skull/12140_Skull_v3_L2.sfb";
-    }else{
+    }
+
+    else if(nodeName.equals("venus.png")){
+      nameSfb = "venus/12328_Statue_v1_L2.sfb";
+    }
+
+    else if(nodeName.equals("egypt_lion.png")){
+      nameSfb = "egypt/10085_egypt_sphinx_iterations-2.sfb";
+    }
+
+    else if(nodeName.equals("deer.png")){
+      nameSfb = "deer/12961_White-Tailed_Deer_v1_l2.sfb";
+    }
+
+    else if(nodeName.equals("ironman.png")){
+      nameSfb = "ironman/IronMan.sfb";
+    }
+
+    else{
       nameSfb="model/frame_lower_left.sfb";
     }
 
@@ -76,11 +93,10 @@ public class AugmentedImageNode extends AnchorNode {
                         .build();
 
       }
-     
 
 
 
-//    if(nodeName == "default.jpg"){
+//    if(nodeName == "earth.jpg"){
 //      if (ulCorner == null) {
 //        ulCorner =
 //                ModelRenderable.builder()
@@ -139,19 +155,22 @@ public class AugmentedImageNode extends AnchorNode {
       Vector3 localPosition = new Vector3();
       Node cornerNode;
 
-      localPosition.set(0.0f, 0.0f, 0.0f);
+
+
+    localPosition.set(0.0f, 0.0f, 0.0f);
       cornerNode = new Node();
+      cornerNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 180f));
       cornerNode.setParent(this);
       cornerNode.setLocalPosition(localPosition);
       cornerNode.setRenderable(myModel.getNow(null));
 
 
 
-//    else if (this.imgName == "default.jpg") {
+//    else if (this.imgName == "earth.jpg") {
 ////      // If any of the models are not loaded, then recurse when all are loaded.
 ////      if (!ulCorner.isDone() || !urCorner.isDone() || !llCorner.isDone() || !lrCorner.isDone()) {
 ////        CompletableFuture.allOf(ulCorner, urCorner, llCorner, lrCorner)
-////                .thenAccept((Void aVoid) -> setImage(image,"default.jpg"))
+////                .thenAccept((Void aVoid) -> setImage(image,"earth.jpg"))
 ////                .exceptionally(
 ////                        throwable -> {
 ////                          Log.e(TAG, "Exception loading", throwable);

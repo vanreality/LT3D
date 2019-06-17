@@ -37,7 +37,7 @@
     file: 'sampledata/dog/12228_Dog_v1_L2.obj',
     name: '12228_Dog_v1_L2',
     recenter: 'root',
-    scale: 0.00074973999999999999,
+    scale: 0.0014973999999999999,
   },
   samplers: [
     {
