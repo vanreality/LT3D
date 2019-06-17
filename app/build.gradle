@@ -71,17 +71,22 @@ sceneform.asset('sampledata/models/frame_lower_left.obj',
         'sampledata/models/frame_lower_left.sfa',
         'src/main/assets/model/frame_lower_left')
 
-sceneform.asset('sampledata/models/frame_lower_right.obj',
-        'default',
-        'sampledata/models/frame_lower_right.sfa',
-        'src/main/assets/model/frame_lower_right')
+//sceneform.asset('sampledata/models/frame_lower_right.obj',
+//        'default',
+//        'sampledata/models/frame_lower_right.sfa',
+//        'src/main/assets/model/frame_lower_right')
+//
+//sceneform.asset('sampledata/models/frame_upper_left.obj',
+//        'default',
+//        'sampledata/models/frame_upper_left.sfa',
+//        'src/main/assets/model/frame_upper_left')
+//
+//sceneform.asset('sampledata/models/frame_upper_right.obj',
+//        'default',
+//        'sampledata/models/frame_upper_right.sfa',
+//        'src/main/assets/model/frame_upper_right')
 
-sceneform.asset('sampledata/models/frame_upper_left.obj',
+sceneform.asset('sampledata/skull/12140_Skull_v3_L2.obj',
         'default',
-        'sampledata/models/frame_upper_left.sfa',
-        'src/main/assets/model/frame_upper_left')
-
-sceneform.asset('sampledata/models/frame_upper_right.obj',
-        'default',
-        'sampledata/models/frame_upper_right.sfa',
-        'src/main/assets/model/frame_upper_right')
+        'sampledata/skull/12140_Skull_v3_L2.sfa',
+        'src/main/assets/skull/12140_Skull_v3_L2')
