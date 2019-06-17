@@ -59,7 +59,7 @@ public class AugmentedImageNode extends AnchorNode {
     // Upon construction, start loading the models for the corners of the frame.
 
     if(nodeName.equals("dog.png")){
-      nameSfb ="dog/12228_Dog_v1_L2.sfb";
+      nameSfb ="model/frame_lower_left.sfb";
     }
     else if (nodeName.equals("skull3.jpg")){
       nameSfb = "skull/12140_Skull_v3_L2.sfb";

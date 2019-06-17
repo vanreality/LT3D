@@ -34,6 +34,7 @@ public class ModelActivity extends AppCompatActivity {
     private ModelRenderable modelRenderable;
     boolean hasPlacedSolarSystem =false;
     private String nameModel;
+    private String nameSfb;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +44,18 @@ public class ModelActivity extends AppCompatActivity {
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
+        if(nameModel.equals("Skull")){
+            nameSfb="skull/12140_Skull_v3_L2.sfb";
+        }else {
+            nameSfb="model/frame_lower_left.sfb";
+        }
         setContentView(R.layout.activity_model);
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);
 
+
         ModelRenderable.builder()
-                .setSource(this, Uri.parse("skull/12140_Skull_v3_L2.sfb"))
+                .setSource(this, Uri.parse(nameSfb))
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable)
                 .exceptionally(
