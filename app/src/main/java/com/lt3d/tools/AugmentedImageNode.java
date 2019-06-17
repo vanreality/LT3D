@@ -23,6 +23,7 @@ import android.util.Log;
 import com.google.ar.core.AugmentedImage;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.Node;
+import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
@@ -134,8 +135,11 @@ public class AugmentedImageNode extends AnchorNode {
       Vector3 localPosition = new Vector3();
       Node cornerNode;
 
-      localPosition.set(0.0f, 0.0f, 0.0f);
+
+
+    localPosition.set(0.0f, 0.0f, 0.0f);
       cornerNode = new Node();
+      cornerNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 180f));
       cornerNode.setParent(this);
       cornerNode.setLocalPosition(localPosition);
       cornerNode.setRenderable(myModel.getNow(null));

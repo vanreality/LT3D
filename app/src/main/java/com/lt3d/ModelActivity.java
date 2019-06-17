@@ -20,6 +20,8 @@ import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
 import com.google.ar.sceneform.ArSceneView;
 
+import com.google.ar.sceneform.math.Quaternion;
+import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
 import com.google.ar.sceneform.ux.ArFragment;
 import com.google.ar.sceneform.ux.TransformableNode;
@@ -46,7 +48,7 @@ public class ModelActivity extends AppCompatActivity {
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);
 
         ModelRenderable.builder()
-                .setSource(this, Uri.parse("model/frame_lower_left.sfb"))
+                .setSource(this, Uri.parse("skull/12140_Skull_v3_L2.sfb"))
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable)
                 .exceptionally(
@@ -75,7 +77,7 @@ public class ModelActivity extends AppCompatActivity {
                     TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
 
                     //set rotation in direction (x,y,z) in degrees 90
-                    //node.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 90f));
+                    node.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), -90f));
                     node.setParent(anchorNode);
                     node.setRenderable(modelRenderable);
                     node.select();
