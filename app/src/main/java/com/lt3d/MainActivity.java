@@ -1,6 +1,5 @@
 package com.lt3d;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,29 +9,31 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.lt3d.data.Book;
+import com.lt3d.data.Books;
+import com.lt3d.data.Model;
+import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
 import com.lt3d.fragment.SettingFragment;
 import com.lt3d.tools.Alert;
-import com.lt3d.tools.AugmentedImageNode;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-import android.view.Gravity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private FirebaseUser currentUser;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity {
     LibraryFragment libraryFragment;
     ScanFragment scanFragment;
     SettingFragment settingFragment;
+    private DatabaseReference databaseReference;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
         libraryFragment = new LibraryFragment();
         scanFragment = new ScanFragment();
         settingFragment = new SettingFragment();
+
+        databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
     public void createFirebaseSignInIntent() {
@@ -93,13 +98,27 @@ public class MainActivity extends AppCompatActivity {
                 // Successfully signed in
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
-                changeFragment(libraryFragment);
+                databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
+
+                ValueEventListener valueEventListener = new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        user = dataSnapshot.getValue(User.class);
+                        if (user != null) {
+                            changeFragment(libraryFragment);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                };
+
+                databaseReference.addValueEventListener(valueEventListener);
+
             } else {
-                // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
-                // response.getError().getErrorCode() and handle the error.
-                // ...
-                //TODO display sign in failed situation
+                Alert.show(this, "Sign in failed, please check your Internet");
             }
         }
     }
@@ -138,5 +157,23 @@ public class MainActivity extends AppCompatActivity {
 
     public FirebaseUser getCurrentUser() {
         return currentUser;
+    }
+
+    public User getUser() { return user; }
+
+    private void writeData(String userId) {
+        List<String> library = new ArrayList<>();
+        library.add("0");
+        library.add("2");
+        User user = new User(library);
+        databaseReference.child("users").child(userId).setValue(user);
+
+        List<Book> books = new ArrayList<>();
+        books.add(new Book("Quantum mechanics", "0"));
+        books.add(new Book("Biology", "1"));
+        books.add(new Book("Auto CAD", "2"));
+        books.add(new Book("Unity development", "2"));
+        Books test = new Books(books);
+        databaseReference.child("books").setValue(test);
     }
 }

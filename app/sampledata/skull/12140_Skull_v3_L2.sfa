@@ -37,7 +37,7 @@
     file: 'sampledata/skull/12140_Skull_v3_L2.obj',
     name: '12140_Skull_v3_L2',
     recenter: 'root',
-    scale: 0.090402000000000002,
+    scale: 0.0090402000000000002,
   },
   samplers: [
     {
