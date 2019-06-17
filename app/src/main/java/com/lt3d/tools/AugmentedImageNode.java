@@ -67,12 +67,15 @@ public class AugmentedImageNode extends AnchorNode {
       nameSfb="model/frame_lower_left.sfb";
     }
 
-    if(nameSfb != null){
+    if (myModel == null) {
       myModel =
               ModelRenderable.builder()
                       .setSource(context, Uri.parse(nameSfb))
                       .build();
     }
+
+
+
 
 
 
