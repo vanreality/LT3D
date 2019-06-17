@@ -53,6 +53,9 @@ public class AugmentedImageNode extends AnchorNode {
 //  private static CompletableFuture<ModelRenderable> llCorner;
 
   private static CompletableFuture<ModelRenderable> myModel;
+  private static CompletableFuture<ModelRenderable> dog;
+  private static CompletableFuture<ModelRenderable> skull;
+
 
   public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
@@ -66,12 +69,14 @@ public class AugmentedImageNode extends AnchorNode {
       nameSfb="model/frame_lower_left.sfb";
     }
 
-    if(nameSfb != null){
-      myModel =
-              ModelRenderable.builder()
-                      .setSource(context, Uri.parse(nameSfb))
-                      .build();
-    }
+      if(myModel == null){
+        myModel =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse(nameSfb))
+                        .build();
+
+      }
+     
 
 
 
