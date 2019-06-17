@@ -61,25 +61,42 @@ public class AugmentedImageNode extends AnchorNode {
     if(nodeName.equals("dog.png")){
       nameSfb ="model/frame_lower_left.sfb";
     }
+
     else if (nodeName.equals("skull3.jpg")){
       nameSfb = "skull/12140_Skull_v3_L2.sfb";
-    }else{
+    }
+
+    else if(nodeName.equals("venus.png")){
+      nameSfb = "venus/12328_Statue_v1_L2.sfb";
+    }
+
+    else if(nodeName.equals("egypt_lion.png")){
+      nameSfb = "egypt/10085_egypt_sphinx_iterations-2.sfb";
+    }
+
+    else if(nodeName.equals("deer.png")){
+      nameSfb = "deer/12961_White-Tailed_Deer_v1_l2.sfb";
+    }
+
+    else if(nodeName.equals("ironman.png")){
+      nameSfb = "ironman/IronMan.sfb";
+    }
+
+    else{
       nameSfb="model/frame_lower_left.sfb";
     }
 
-    if (myModel == null) {
-      myModel =
-              ModelRenderable.builder()
-                      .setSource(context, Uri.parse(nameSfb))
-                      .build();
-    }
+      if(myModel == null){
+        myModel =
+                ModelRenderable.builder()
+                        .setSource(context, Uri.parse(nameSfb))
+                        .build();
+
+      }
 
 
 
-
-
-
-//    if(nodeName == "default.jpg"){
+//    if(nodeName == "earth.jpg"){
 //      if (ulCorner == null) {
 //        ulCorner =
 //                ModelRenderable.builder()
@@ -149,11 +166,11 @@ public class AugmentedImageNode extends AnchorNode {
 
 
 
-//    else if (this.imgName == "default.jpg") {
+//    else if (this.imgName == "earth.jpg") {
 ////      // If any of the models are not loaded, then recurse when all are loaded.
 ////      if (!ulCorner.isDone() || !urCorner.isDone() || !llCorner.isDone() || !lrCorner.isDone()) {
 ////        CompletableFuture.allOf(ulCorner, urCorner, llCorner, lrCorner)
-////                .thenAccept((Void aVoid) -> setImage(image,"default.jpg"))
+////                .thenAccept((Void aVoid) -> setImage(image,"earth.jpg"))
 ////                .exceptionally(
 ////                        throwable -> {
 ////                          Log.e(TAG, "Exception loading", throwable);

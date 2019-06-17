@@ -46,6 +46,8 @@ public class ModelActivity extends AppCompatActivity {
         }
         if(nameModel.equals("Skull")){
             nameSfb="skull/12140_Skull_v3_L2.sfb";
+        }else if(nameModel.equals("Heart")) {
+            nameSfb="venus/12328_Statue_v1_L2.sfb";
         }else {
             nameSfb="model/frame_lower_left.sfb";
         }

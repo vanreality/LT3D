@@ -1,0 +1,53 @@
+{
+  materials: [
+    {
+      name: '12328_Statue',
+      parameters: [
+        {
+          baseColor: 'statue',
+        },
+        {
+          baseColorTint: [
+            1,
+            1,
+            1,
+            1,
+          ],
+        },
+        {
+          metallic: 1,
+        },
+        {
+          roughness: 0.408248,
+        },
+        {
+          opacity: null,
+        },
+      ],
+      source: 'build/sceneform_sdk/default_materials/obj_material.sfm',
+    },
+  ],
+  model: {
+    attributes: [
+      'Position',
+      'TexCoord',
+      'Orientation',
+    ],
+    collision: {},
+    file: 'sampledata/venus/12328_Statue_v1_L2.obj',
+    name: '12328_Statue_v1_L2',
+    recenter: 'root',
+    scale: 0.0016663000000000001,
+  },
+  samplers: [
+    {
+      file: 'sampledata/venus/statue.jpg',
+      name: 'statue',
+      params: {
+        usage_type: 'Data',
+      },
+      pipeline_name: 'statue.jpg',
+    },
+  ],
+  version: '0.54:2',
+}
