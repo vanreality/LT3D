@@ -37,7 +37,7 @@
     file: 'sampledata/egypt_lion/10085_egypt_sphinx_iterations-2.obj',
     name: '10085_egypt_sphinx_iterations-2',
     recenter: 'root',
-    scale: 0.000687,
+    scale: 0.000287,
   },
   samplers: [
     {
