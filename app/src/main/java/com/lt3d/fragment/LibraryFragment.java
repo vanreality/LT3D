@@ -181,6 +181,7 @@ public class LibraryFragment extends Fragment {
                 int id = 0;
                 User user = mainActivity.getUser();
                 for (Book b : books.books) {
+                    if(user!=null)
                     if (user.library.contains(String.valueOf(id))) {
                         libraryRecyclerViewAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
                     }
