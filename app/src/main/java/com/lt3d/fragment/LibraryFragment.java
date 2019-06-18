@@ -43,7 +43,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-//3343
 public class LibraryFragment extends Fragment {
     private EditText edt_search;
     private RecyclerView libraryRecyclerView;
@@ -65,6 +64,13 @@ public class LibraryFragment extends Fragment {
         super.onAttach(context);
     }
 
+    /**
+     * Create a view corresponding to the LibraryFragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -73,17 +79,26 @@ public class LibraryFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Initializing this view
+     */
     private void init() {
         edt_search = view.findViewById(R.id.edt_library_search);
         libraryRecyclerView = view.findViewById(R.id.library_recyclerView);
         mainActivity = (MainActivity) getActivity();
 
+        // Report that this fragment would like to participate in populating
+        // the options menu by receiving a call to {@link #onCreateOptionsMenu}
+        // and related methods.
         setHasOptionsMenu(true);
 
         libraryRecyclerViewAdapter = new LibraryRecyclerViewAdapter(new ArrayList<>());
 
         recyclerViewConfigBook();
 
+        /**
+         * Function of search
+         */
         edt_search.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence sequence, int i, int i1, int i2) {
@@ -122,6 +137,11 @@ public class LibraryFragment extends Fragment {
         }
     }
 
+    /**
+     *
+     * @param menu
+     * @param inflater
+     */
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         myMenu = menu;
@@ -132,16 +152,23 @@ public class LibraryFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            //Return to the interface of LibraryFragment
+            //Set the back button invisible
             case android.R.id.home:
                 recyclerViewConfigBook();
                 edt_search.setText("");
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                 return true;
+
+            //Enter the interface of add a book
+            //Set the back button visible
             case R.id.menu_add:
                 recyclerViewConfigAddBook();
                 edt_search.setText("");
                 mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
                 return true;
+
+            // Arrange the current interface in alphabetical order
             case R.id.menu_sortAZ:
                 if(libraryRecyclerViewModelAdapter!=null)
                     libraryRecyclerViewModelAdapter.sortModelAZ();
@@ -149,6 +176,8 @@ public class LibraryFragment extends Fragment {
                     libraryRecyclerViewAddBookAdapter.sortBookAZ();
                 libraryRecyclerViewAdapter.sortBookAZ();
                 return true;
+
+            //Sort the current interface in alphabetical reverse order
             case R.id.menu_sortZA:
                 if(libraryRecyclerViewModelAdapter!=null)
                     libraryRecyclerViewModelAdapter.sortModelZA();
@@ -165,6 +194,9 @@ public class LibraryFragment extends Fragment {
         myMenu.getItem(0).setVisible(true);
     }
 
+    /**
+     * Enter the interface of books that the current user has added
+     */
     private void recyclerViewConfigBook() {
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         libraryRecyclerView.setAdapter(libraryRecyclerViewAdapter);
@@ -200,6 +232,10 @@ public class LibraryFragment extends Fragment {
         databaseReference.addValueEventListener(valueEventListener);
     }
 
+    /**
+     * Enter the interface of models that the current book has
+     * @param bid
+     */
     private void recyclerViewConfigModel(String bid) {
         libraryRecyclerViewModelAdapter = new LibraryRecyclerViewModelAdapter(new ArrayList<>());
         libraryRecyclerView.setLayoutManager(new LinearLayoutManager(mainActivity));
@@ -232,7 +268,10 @@ public class LibraryFragment extends Fragment {
 
         databaseReference.addValueEventListener(valueEventListener);
     }
-    
+
+    /**
+     * Enter the interface of adding a new book for the current User
+     */
     private void recyclerViewConfigAddBook() {
         libraryRecyclerViewAddBookAdapter = new LibraryRecyclerViewAddBookAdapter(new ArrayList<>());
         libraryRecyclerView.setAdapter(libraryRecyclerViewAddBookAdapter);
@@ -334,6 +373,10 @@ public class LibraryFragment extends Fragment {
             return books == null ? 0 : books.size();
         }
 
+        /**
+         * Left slide to delete item
+         * @param position
+         */
         @Override
         public void onItemDissmiss(int position) {
             mainActivity.getUser().library.remove(books.get(position).id);
@@ -347,6 +390,11 @@ public class LibraryFragment extends Fragment {
             notifyItemRemoved(position);
         }
 
+        /**
+         * Long press to swap the location of two items
+         * @param fromPosition
+         * @param toPosition
+         */
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
             DataEntity tmp = books.get(fromPosition);
@@ -480,9 +528,12 @@ public class LibraryFragment extends Fragment {
                 textView.setText(modelName);
             }
 
+            /**
+             * Open sceneForm fragment
+             * @param view
+             */
             @Override
             public void onClick(View view) {
-                //TODO Open sceneForm fragment
                 Intent i=new Intent();
                 i.setClass(getActivity(), com.lt3d.ModelActivity.class);
                 i.putExtra("modelName",models.get(getAdapterPosition()).getLabel());
