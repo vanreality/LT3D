@@ -32,6 +32,13 @@ public class SettingFragment extends Fragment {
         super.onAttach(context);
     }
 
+    /**
+     * Create a view corresponding to the SettingFragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -41,6 +48,10 @@ public class SettingFragment extends Fragment {
         return view;
 
     }
+
+    /**
+     * Initializing this view
+     */
     public void init(){
         TextView text_version = view.findViewById(R.id.version_show);
         TextView text_copyright = view.findViewById(R.id.copyright_show);
@@ -50,10 +61,15 @@ public class SettingFragment extends Fragment {
         mainActivity = (MainActivity) getActivity();
 
 
+        // If the user logs in anonymously
         if (mainActivity.getCurrentUser() == null) {
             text_account.setText("Anonymous login");
             btn_disconnect.setText("Connect");
             btn_disconnect.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Back to the login interface (MainActivity)
+                 * @param v
+                 */
                 @Override
                 public void onClick(View v) {
                     Intent intent = mainActivity.getIntent();
@@ -64,6 +80,7 @@ public class SettingFragment extends Fragment {
                 }
             });
         } else {
+            // Enable logged in users to log out from this interface
             FirebaseUser currentUser = mainActivity.getCurrentUser();
             text_account.setText(currentUser.getDisplayName());
             btn_disconnect.setOnClickListener(new View.OnClickListener() {
@@ -77,6 +94,9 @@ public class SettingFragment extends Fragment {
         text_copyright.setText("Copyright20190613.AllRightsReserved");
     }
 
+    /**
+     * Fonction for logging out
+     */
     public void signOut() {
         AuthUI.getInstance()
                 .signOut(getContext())

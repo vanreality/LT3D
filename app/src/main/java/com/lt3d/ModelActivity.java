@@ -24,7 +24,6 @@ import com.google.ar.sceneform.ux.TransformableNode;
 
 public class ModelActivity extends AppCompatActivity {
 
-
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
 
@@ -70,6 +69,9 @@ public class ModelActivity extends AppCompatActivity {
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);
 
 
+        /**
+         * Build the 3D model
+         */
         ModelRenderable.builder()
                 .setSource(this, Uri.parse(nameSfb))
                 .build()
@@ -85,7 +87,6 @@ public class ModelActivity extends AppCompatActivity {
 
 
 
-
         arFragment.setOnTapArPlaneListener(
                 (HitResult hitResult, Plane plane, MotionEvent motionEvent) -> {
                     if (modelRenderable == null) {
@@ -96,7 +97,7 @@ public class ModelActivity extends AppCompatActivity {
                     AnchorNode anchorNode = new AnchorNode(anchor);
                     anchorNode.setParent(arFragment.getArSceneView().getScene());
 
-                    // Create the transformable andy and add it to the anchor.
+                    // Create the transformable model and add it to the anchor.
                     TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
 
                     //set rotation in direction (x,y,z) in degrees 90
@@ -111,7 +112,11 @@ public class ModelActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * Check if the version of device is enough
+     * @param activity
+     * @return
+     */
     public static boolean checkIsSupportedDeviceOrFinish(final Activity activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
             //Log.e(TAG, "Sceneform requires Android N or later");

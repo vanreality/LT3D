@@ -53,6 +53,9 @@ public class MainActivity extends AppCompatActivity {
         createFirebaseSignInIntent();
     }
 
+    /**
+     * Initialize the application
+     */
     private void init() {
         navView = findViewById(R.id.nav_view);
         navView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -64,16 +67,16 @@ public class MainActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference();
     }
 
+    /**
+     * Call the firebase function to enter the login interface
+     */
     public void createFirebaseSignInIntent() {
         // [START auth_fui_create_intent]
         // Choose authentication providers
-
         List<AuthUI.IdpConfig> providers = Arrays.asList(
                 new AuthUI.IdpConfig.EmailBuilder().build(),
                 new AuthUI.IdpConfig.GoogleBuilder().build());
 
-//        List<AuthUI.IdpConfig> providers = Arrays.asList(
-//                new AuthUI.IdpConfig.EmailBuilder().build());
 
         // Create and launch sign-in intent
         startActivityForResult(
@@ -87,22 +90,33 @@ public class MainActivity extends AppCompatActivity {
         // [END auth_fui_create_intent]
     }
 
+    /**
+     * Detect login status
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == RC_SIGN_IN) {
             IdpResponse response = IdpResponse.fromResultIntent(data);
 
+            // If the login is successful
             if (resultCode == RESULT_OK) {
                 // Successfully signed in
+                // Get uid of the logged in User
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
 
+                // Get the database of the current User
                 databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
 
                 ValueEventListener valueEventListener = new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
+                        // Refresh the fragment for Users already in the database
+                        // Enter the libraryFragment by default
                         changeFragment(libraryFragment);
                     }
 
@@ -120,6 +134,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Build the fragment selection at the bottom of the MainActivity
+     */
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -140,6 +157,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
+    /**
+     * Place the corresponding fragment to the MainActivity's RecyclerView interface
+     * @param fragment
+     */
     private void changeFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
