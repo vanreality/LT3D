@@ -36,6 +36,13 @@ public class ScanFragment extends Fragment {
     // the database.
     private final Map<AugmentedImage, AugmentedImageNode> augmentedImageMap = new HashMap<>();
 
+    /**
+     * Create a view corresponding to the ScanFragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -52,17 +59,24 @@ public class ScanFragment extends Fragment {
             /* map is already there, just return view as it is */
         }
 
-//        view = inflater.inflate(R.layout.fragment_scan, container, false);
         arFragmentConfig();
         return view;
     }
 
+    /**
+     * Set the view of the fragment to the scanned image
+     * Set the UpdateListener to this view
+     */
     private void arFragmentConfig() {
         arFragment = (ArFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
     }
 
+    /**
+     * Call function for image detection every frame
+     * @param frameTime
+     */
     private void onUpdateFrame(FrameTime frameTime) {
         Frame frame = arFragment.getArSceneView().getArFrame();
 
@@ -71,8 +85,11 @@ public class ScanFragment extends Fragment {
             return;
         }
 
+        //Collect the result of tracking
         Collection<AugmentedImage> updatedAugmentedImages =
                 frame.getUpdatedTrackables(AugmentedImage.class);
+
+        //Get the state of tracking
         for (AugmentedImage augmentedImage : updatedAugmentedImages) {
             switch (augmentedImage.getTrackingState()) {
                 case PAUSED:
@@ -86,7 +103,9 @@ public class ScanFragment extends Fragment {
                     // Have to switch to UI Thread to update View.
                     fitToScanView.setVisibility(View.GONE);
                     modelName = augmentedImage.getName();
+                    // Create a augmentedImageNode correponding to the image scanned
                     AugmentedImageNode node = new AugmentedImageNode(getContext(),modelName);
+                    // Set the 3D model
                     node.setImage(augmentedImage,modelName);
                     Log.d("track",augmentedImage.getName());
                     arFragment.getArSceneView().getScene().addChild(node);

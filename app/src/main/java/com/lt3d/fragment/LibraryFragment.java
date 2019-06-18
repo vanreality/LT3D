@@ -138,7 +138,7 @@ public class LibraryFragment extends Fragment {
     }
 
     /**
-     *
+     * Initialize the contents of the Fragment host's standard options menu.
      * @param menu
      * @param inflater
      */
@@ -374,7 +374,7 @@ public class LibraryFragment extends Fragment {
         }
 
         /**
-         * Left slide to delete item
+         * Left slide to delete item using the ItemTouchHelperAdapter
          * @param position
          */
         @Override
@@ -391,7 +391,7 @@ public class LibraryFragment extends Fragment {
         }
 
         /**
-         * Long press to swap the location of two items
+         * Long press to swap the location of two items using the ItemTouchHelperAdapter
          * @param fromPosition
          * @param toPosition
          */
@@ -417,6 +417,10 @@ public class LibraryFragment extends Fragment {
                 textView.setText(data);
             }
 
+            /**
+             * Enter the interface of models that the current book has
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
@@ -500,14 +504,21 @@ public class LibraryFragment extends Fragment {
             return models == null ? 0 : models.size();
         }
 
+        /**
+         * Left slide to delete item using the ItemTouchHelperAdapter
+         * @param position
+         */
         @Override
         public void onItemDissmiss(int position) {
             models.remove(position);
             notifyItemRemoved(position);
-
-            //TODO delete mid of the current user in firebase
         }
 
+        /**
+         * Long press to swap the location of two items using the ItemTouchHelperAdapter
+         * @param fromPosition
+         * @param toPosition
+         */
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
             DataEntity tmp = models.get(fromPosition);
@@ -620,14 +631,21 @@ public class LibraryFragment extends Fragment {
             return books == null ? 0 : books.size();
         }
 
+        /**
+         * Left slide to delete item using the ItemTouchHelperAdapter
+         * @param position
+         */
         @Override
         public void onItemDissmiss(int position) {
             books.remove(position);
             notifyItemRemoved(position);
-
-            //TODO delete bid of the current user from firebase
         }
 
+        /**
+         * Long press to swap the location of two items using the ItemTouchHelperAdapter
+         * @param fromPosition
+         * @param toPosition
+         */
         @Override
         public void onItemMove(int fromPosition, int toPosition) {
             DataEntity tmp = books.get(fromPosition);
@@ -650,6 +668,7 @@ public class LibraryFragment extends Fragment {
                 textView.setText(data);
             }
 
+            //Add the book selected and enter the interface of books that the current user has
             @Override
             public void onClick(View v) {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){

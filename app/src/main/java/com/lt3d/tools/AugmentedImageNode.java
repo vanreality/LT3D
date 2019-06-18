@@ -49,7 +49,6 @@ public class AugmentedImageNode extends AnchorNode {
 
   public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
-
     if(nodeName.equals("dog.png")){
       nameSfb ="dog/12228_Dog_v1_L2.sfb";
     }
@@ -59,6 +58,7 @@ public class AugmentedImageNode extends AnchorNode {
       nameSfb="model/frame_lower_left.sfb";
     }
 
+    //Build the renderable corresponding to the current nameSfb
     if (myModel == null) {
       myModel =
               ModelRenderable.builder()
@@ -92,13 +92,13 @@ public class AugmentedImageNode extends AnchorNode {
       // Set the anchor based on the center of the image.
       setAnchor(image.createAnchor(image.getCenterPose()));
 
-      // Make the 4 corner nodes.
+      // Make the node
       Vector3 localPosition = new Vector3();
       Node cornerNode;
 
+      localPosition.set(0.0f, 0.0f, 0.0f);
 
 
-    localPosition.set(0.0f, 0.0f, 0.0f);
       cornerNode = new Node();
       cornerNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 180f));
       cornerNode.setParent(this);
