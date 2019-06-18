@@ -1,25 +1,21 @@
 package com.lt3d;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.ArSceneView;
-
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
@@ -28,16 +24,18 @@ import com.google.ar.sceneform.ux.TransformableNode;
 
 public class ModelActivity extends AppCompatActivity {
 
-    private GestureDetector gestureDetector;
-    private ArSceneView arSceneView;
+
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
-    boolean hasPlacedSolarSystem =false;
-    private String nameModel;
+
     private String nameSfb;
+
+    public ModelActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String nameModel;
         super.onCreate(savedInstanceState);
 
         nameModel=getIntent().getStringExtra("modelName");

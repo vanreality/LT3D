@@ -30,7 +30,6 @@ import com.lt3d.MainActivity;
 import com.lt3d.R;
 import com.lt3d.data.Book;
 import com.lt3d.data.Books;
-import com.lt3d.data.Models;
 import com.lt3d.data.User;
 import com.lt3d.tools.touchHelper.ItemTouchHelperAdapter;
 import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
@@ -132,12 +131,12 @@ public class LibraryFragment extends Fragment {
             case android.R.id.home:
                 recyclerViewConfigBook();
                 edt_search.setText("");
-                mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                Objects.requireNonNull(mainActivity.getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
                 return true;
             case R.id.menu_add:
                 recyclerViewConfigAddBook();
                 edt_search.setText("");
-                mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                Objects.requireNonNull(mainActivity.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
                 return true;
             case R.id.menu_sortAZ:
                 if(libraryRecyclerViewModelAdapter!=null)
@@ -215,7 +214,7 @@ public class LibraryFragment extends Fragment {
                 if (modelData == null) { return; }
 
                 for (int i = 0; i < modelData.size(); i++) {
-                    tmp = new DataEntity(modelData.get(i).get("title").toString(), String.valueOf(i));
+                    tmp = new DataEntity(Objects.requireNonNull(modelData.get(i).get("title")).toString(), String.valueOf(i));
                     libraryRecyclerViewModelAdapter.addData(tmp);
                 }
             }
@@ -262,7 +261,7 @@ public class LibraryFragment extends Fragment {
         }
 
         void addData(DataEntity book) {
-            Boolean flag = true;
+            boolean flag = true;
             for (DataEntity d : books) {
                 if (book.getId().equals(d.getId())) {
                     flag = false;
@@ -274,7 +273,7 @@ public class LibraryFragment extends Fragment {
             }
         }
 
-        public void sortBookAZ(){
+        void sortBookAZ(){
             Collections.sort(books, new Comparator<DataEntity>() {
                 @Override
                 public int compare(DataEntity dataEntity, DataEntity t1) {
@@ -284,15 +283,10 @@ public class LibraryFragment extends Fragment {
         }
 
         public void sortBookZA(){
-            Collections.sort(books, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return t1.getLabel().compareTo(dataEntity.getLabel());
-                }
-            });notifyDataSetChanged();
+            Collections.sort(books, (dataEntity, t1) -> t1.getLabel().compareTo(dataEntity.getLabel()));notifyDataSetChanged();
         }
 
-        public void search(CharSequence sequence){
+        void search(CharSequence sequence){
             books = books_tmp;
             List<DataEntity> mbooks =new ArrayList<>();
             String charString = sequence.toString();
@@ -370,7 +364,7 @@ public class LibraryFragment extends Fragment {
                     recyclerViewConfigModel(books.get(getAdapterPosition()).getId());
                     showMenu();
                     edt_search.setText("");
-                    mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+                    Objects.requireNonNull(mainActivity.getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
                 }
             }
         }
@@ -391,24 +385,14 @@ public class LibraryFragment extends Fragment {
             models.add(model);
             notifyItemInserted(models.size());
         }
-        public void sortModelAZ(){
-            Collections.sort(models, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return dataEntity.getLabel().compareTo(t1.getLabel());
-                }
-            });notifyDataSetChanged();
+        void sortModelAZ(){
+            Collections.sort(models, (dataEntity, t1) -> dataEntity.getLabel().compareTo(t1.getLabel()));notifyDataSetChanged();
         }
-        public void sortModelZA(){
-            Collections.sort(models, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return t1.getLabel().compareTo(dataEntity.getLabel());
-                }
-            });notifyDataSetChanged();
+        void sortModelZA(){
+            Collections.sort(models, (dataEntity, t1) -> t1.getLabel().compareTo(dataEntity.getLabel()));notifyDataSetChanged();
         }
 
-        public void search(CharSequence sequence){
+        void search(CharSequence sequence){
             models = models_tmp;
             List<DataEntity> mModels =new ArrayList<>();
             String charString = sequence.toString();
@@ -479,7 +463,7 @@ public class LibraryFragment extends Fragment {
             public void onClick(View view) {
                 //TODO Open sceneForm fragment
                 Intent i=new Intent();
-                i.setClass(getActivity(), com.lt3d.ModelActivity.class);
+                i.setClass(Objects.requireNonNull(getActivity()), com.lt3d.ModelActivity.class);
                 i.putExtra("modelName",models.get(getAdapterPosition()).getLabel());
                 startActivity(i);
 
@@ -600,7 +584,7 @@ public class LibraryFragment extends Fragment {
                     }
 
                     showMenu();
-                    mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+                    Objects.requireNonNull(mainActivity.getSupportActionBar()).setDisplayHomeAsUpEnabled(false);
                     edt_search.setText("");
                     recyclerViewConfigBook();
                 }

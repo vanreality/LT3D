@@ -1,6 +1,6 @@
 package com.lt3d.fragment;
 
-import android.net.Uri;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.InflateException;
@@ -25,17 +25,18 @@ import com.lt3d.tools.AugmentedImageNode;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class ScanFragment extends Fragment {
     private ArFragment arFragment;
     private ImageView fitToScanView;
     private View view;
-    private String modelName;
 
     // Augmented image and its associated center pose anchor, keyed by the augmented image in
     // the database.
     private final Map<AugmentedImage, AugmentedImageNode> augmentedImageMap = new HashMap<>();
 
+    @SuppressLint("InflateParams")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,7 +59,7 @@ public class ScanFragment extends Fragment {
     }
 
     private void arFragmentConfig() {
-        arFragment = (ArFragment) getActivity().getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
+        arFragment = (ArFragment) Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
     }
@@ -85,16 +86,16 @@ public class ScanFragment extends Fragment {
                 case TRACKING:
                     // Have to switch to UI Thread to update View.
                     fitToScanView.setVisibility(View.GONE);
-                    modelName = augmentedImage.getName();
-                    AugmentedImageNode node = new AugmentedImageNode(getContext(),modelName);
-                    node.setImage(augmentedImage,modelName);
+                    String modelName = augmentedImage.getName();
+                    AugmentedImageNode node = new AugmentedImageNode(getContext(), modelName);
+                    node.setImage(augmentedImage);
                     Log.d("track",augmentedImage.getName());
                     arFragment.getArSceneView().getScene().addChild(node);
 
                     // Create a new anchor for newly found images.
                     if (!augmentedImageMap.containsKey(augmentedImage)) {
                         AugmentedImageNode newNode = new AugmentedImageNode(getContext(),"add");
-                        newNode.setImage(augmentedImage,"add");
+                        newNode.setImage(augmentedImage);
                         augmentedImageMap.put(augmentedImage, node);
                         arFragment.getArSceneView().getScene().addChild(node);
                     }

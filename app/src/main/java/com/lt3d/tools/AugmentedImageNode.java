@@ -26,8 +26,6 @@ import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
-import com.google.ar.sceneform.ux.ArFragment;
-import com.lt3d.fragment.ScanFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,9 +41,6 @@ public class AugmentedImageNode extends AnchorNode {
   private static final String TAG = "AugmentedImageNode";
   // The augmented image represented by this node.
   private AugmentedImage image;
-  private String imgName;
-  
-  private List<String> nodeNames=new ArrayList<>();
 
 
   private static List<CompletableFuture<ModelRenderable>> myModels=new ArrayList<>();
@@ -54,6 +49,7 @@ public class AugmentedImageNode extends AnchorNode {
   public AugmentedImageNode(Context context,String nodeName) {
     // Upon construction, start loading the models for the corners of the frame.
 
+    List<String> nodeNames = new ArrayList<>();
     nodeNames.add("dog.png");
     myModel =
             ModelRenderable.builder()
@@ -92,7 +88,7 @@ public class AugmentedImageNode extends AnchorNode {
                     .build();
     myModels.add(myModel);
 
-    for(int i=0;i<nodeNames.size();i++){
+    for(int i = 0; i< nodeNames.size(); i++){
       if(nodeNames.get(i).equals(nodeName)){
         myModel=myModels.get(i);
       }
@@ -106,13 +102,12 @@ public class AugmentedImageNode extends AnchorNode {
    * relative to the center of the image, which is the parent node of the corners.
    */
   @SuppressWarnings({"AndroidApiChecker", "FutureReturnValueIgnored"})
-  public void setImage(AugmentedImage image,String imgName) {
+  public void setImage(AugmentedImage image) {
     this.image = image;
-    this.imgName = imgName;
 
-        if(!myModel.isDone()){
+    if(!myModel.isDone()){
           CompletableFuture.allOf(myModel)
-                  .thenAccept((Void aVoid) -> setImage(image,imgName))
+                  .thenAccept((Void aVoid) -> setImage(image))
                   .exceptionally(
                           throwable -> {
                             Log.e(TAG, "Exception loading", throwable);
