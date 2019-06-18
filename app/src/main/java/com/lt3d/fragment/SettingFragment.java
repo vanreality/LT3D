@@ -13,14 +13,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-
 import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseUser;
-
 import com.lt3d.MainActivity;
 import com.lt3d.R;
+
+import java.util.Objects;
 
 public class SettingFragment extends Fragment {
     private View view;
@@ -41,7 +39,7 @@ public class SettingFragment extends Fragment {
         return view;
 
     }
-    public void init(){
+    private void init(){
         TextView text_version = view.findViewById(R.id.version_show);
         TextView text_copyright = view.findViewById(R.id.copyright_show);
         TextView text_account = view.findViewById(R.id.account_show);
@@ -66,28 +64,21 @@ public class SettingFragment extends Fragment {
         } else {
             FirebaseUser currentUser = mainActivity.getCurrentUser();
             text_account.setText(currentUser.getDisplayName());
-            btn_disconnect.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    signOut();
-                }
-            });
+            btn_disconnect.setOnClickListener(v -> signOut());
         }
         text_version.setText("1.0.0");
         text_copyright.setText("Copyrignt20190613.AllRightsReserved");
     }
 
-    public void signOut() {
+    private void signOut() {
         AuthUI.getInstance()
-                .signOut(getContext())
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Intent intent = mainActivity.getIntent();
-                        mainActivity.overridePendingTransition(0, 0);
-                        mainActivity.finish();
-                        mainActivity.overridePendingTransition(0, 0);
-                        startActivity(intent);
-                    }
+                .signOut(Objects.requireNonNull(getContext()))
+                .addOnCompleteListener(task -> {
+                    Intent intent = mainActivity.getIntent();
+                    mainActivity.overridePendingTransition(0, 0);
+                    mainActivity.finish();
+                    mainActivity.overridePendingTransition(0, 0);
+                    startActivity(intent);
                 });
     }
 }
