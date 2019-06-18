@@ -36,7 +36,6 @@ import com.lt3d.tools.touchHelper.ItemTouchHelperCallback;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
@@ -104,9 +103,15 @@ public class LibraryFragment extends Fragment {
 
             @Override
             public void onTextChanged(CharSequence sequence, int i, int i1, int i2) {
-                libraryRecyclerViewAdapter.search(sequence);
-                if(libraryRecyclerViewModelAdapter != null)
-                libraryRecyclerViewModelAdapter.search(sequence);
+                if (libraryRecyclerViewAdapter != null) {
+                    libraryRecyclerViewAdapter.search(sequence);
+                }
+                if (libraryRecyclerViewModelAdapter != null) {
+                    libraryRecyclerViewModelAdapter.search(sequence);
+                }
+                if (libraryRecyclerViewAddBookAdapter != null) {
+                    libraryRecyclerViewAddBookAdapter.search(sequence);
+                }
             }
 
             @Override
@@ -314,15 +319,10 @@ public class LibraryFragment extends Fragment {
         }
 
         void sortBookAZ(){
-            Collections.sort(books, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return dataEntity.getLabel().compareTo(t1.getLabel());
-                }
-            });notifyDataSetChanged();
+            Collections.sort(books, (dataEntity, t1) -> dataEntity.getLabel().compareTo(t1.getLabel()));notifyDataSetChanged();
         }
 
-        public void sortBookZA(){
+        void sortBookZA(){
             Collections.sort(books, (dataEntity, t1) -> t1.getLabel().compareTo(dataEntity.getLabel()));notifyDataSetChanged();
         }
 
@@ -345,6 +345,7 @@ public class LibraryFragment extends Fragment {
             books=mbooks;
             notifyDataSetChanged();
         }
+
         @NonNull
         @Override
         public LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -547,6 +548,10 @@ public class LibraryFragment extends Fragment {
             this.books_tmp = books;
         }
 
+        List<DataEntity> getBooks(){
+            return this.books;
+        }
+
         void addData(DataEntity book) {
             books.add(book);
             notifyItemInserted(books.size());
@@ -560,16 +565,16 @@ public class LibraryFragment extends Fragment {
             Collections.sort(books, (dataEntity, t1) -> t1.getLabel().compareTo(dataEntity.getLabel()));notifyDataSetChanged();
         }
 
-        public void search(CharSequence sequence){
+        void search(CharSequence sequence){
             books = books_tmp;
             List<DataEntity> mbooks =new ArrayList<>();
             String charString = sequence.toString();
             if (charString.isEmpty()) {
-                mbooks = libraryRecyclerViewAdapter.getBooks();
+                mbooks = libraryRecyclerViewAddBookAdapter.getBooks();
             } else {
                 mbooks.clear();
                 List<DataEntity> books_search = new ArrayList<>();
-                for(DataEntity book  : libraryRecyclerViewAdapter.getBooks()){
+                for(DataEntity book  : libraryRecyclerViewAddBookAdapter.getBooks()){
                     if(book.getLabel().toUpperCase().contains(charString.toUpperCase())){
                         books_search.add(book);
                     }
