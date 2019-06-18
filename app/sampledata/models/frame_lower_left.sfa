@@ -37,7 +37,7 @@
     file: 'sampledata/models/frame_lower_left.obj',
     name: 'frame_lower_left',
     recenter: 'root',
-    scale: 1.0006200000000001,
+    scale: 10.0006200000000001,
   },
   samplers: [
     {

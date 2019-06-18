@@ -90,3 +90,25 @@ sceneform.asset('sampledata/skull/12140_Skull_v3_L2.obj',
         'default',
         'sampledata/skull/12140_Skull_v3_L2.sfa',
         'src/main/assets/skull/12140_Skull_v3_L2')
+
+
+
+sceneform.asset('sampledata/venus/12328_Statue_v1_L2.obj',
+        'default',
+        'sampledata/venus/12328_Statue_v1_L2.sfa',
+        'src/main/assets/venus/12328_Statue_v1_L2')
+
+sceneform.asset('sampledata/egypt_lion/10085_egypt_sphinx_iterations-2.obj',
+        'default',
+        'sampledata/egypt_lion/10085_egypt_sphinx_iterations-2.sfa',
+        'src/main/assets/egypt/10085_egypt_sphinx_iterations-2')
+
+sceneform.asset('sampledata/deer/12961_White-Tailed_Deer_v1_l2.obj',
+        'default',
+        'sampledata/deer/12961_White-Tailed_Deer_v1_l2.sfa',
+        'src/main/assets/deer/12961_White-Tailed_Deer_v1_l2')
+
+sceneform.asset('sampledata/ironman/IronMan.obj',
+        'default',
+        'sampledata/ironman/IronMan.sfa',
+        'src/main/assets/ironman/IronMan')

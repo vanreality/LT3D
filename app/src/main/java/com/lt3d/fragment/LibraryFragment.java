@@ -180,9 +180,9 @@ public class LibraryFragment extends Fragment {
                 books = dataSnapshot.getValue(Books.class);
                 int id = 0;
                 User user = mainActivity.getUser();
-                if (user.library.isEmpty()) return;
-                
+                if (user== null) return;
                 for (Book b : books.books) {
+                    if(user!=null)
                     if (user.library.contains(String.valueOf(id))) {
                         libraryRecyclerViewAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
                     }
@@ -242,7 +242,10 @@ public class LibraryFragment extends Fragment {
 
         int id = 0;
         for (Book b : books.books) {
-            if (!mainActivity.getUser().library.contains(String.valueOf(id))) {
+            if (mainActivity.getUser()==null)
+                libraryRecyclerViewAddBookAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
+
+            else if (!mainActivity.getUser().library.contains(String.valueOf(id))) {
                 libraryRecyclerViewAddBookAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
             }
             id++;
