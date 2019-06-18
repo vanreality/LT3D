@@ -193,7 +193,7 @@
     file: 'sampledata/ironman/IronMan.obj',
     name: 'IronMan',
     recenter: 'root',
-    scale: 0.00017739999999999996,
+    scale: 0.00517739999999999996,
   },
   version: '0.54:2',
 }
