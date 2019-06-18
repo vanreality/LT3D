@@ -1,25 +1,21 @@
 package com.lt3d;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.MotionEvent;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.ar.core.Anchor;
 import com.google.ar.core.HitResult;
 import com.google.ar.core.Plane;
 import com.google.ar.sceneform.AnchorNode;
-import com.google.ar.sceneform.ArSceneView;
-
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
@@ -28,29 +24,47 @@ import com.google.ar.sceneform.ux.TransformableNode;
 
 public class ModelActivity extends AppCompatActivity {
 
-    private GestureDetector gestureDetector;
-    private ArSceneView arSceneView;
+
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
-    boolean hasPlacedSolarSystem =false;
-    private String nameModel;
+
     private String nameSfb;
+
+    public ModelActivity() {
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        String nameModel;
         super.onCreate(savedInstanceState);
 
         nameModel=getIntent().getStringExtra("modelName");
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
-        if(nameModel.equals("Skull")){
-            nameSfb="skull/12140_Skull_v3_L2.sfb";
-        }else if(nameModel.equals("Heart")) {
-            nameSfb="venus/12328_Statue_v1_L2.sfb";
-        }else {
-            nameSfb="model/frame_lower_left.sfb";
+
+        switch (nameModel){
+            case "Skull":
+                nameSfb="skull/12140_Skull_v3_L2.sfb";
+                break;
+            case "Venus":
+                nameSfb="venus/12328_Statue_v1_L2.sfb";
+                break;
+            case "Egypt lion":
+                nameSfb="egypt/10085_egypt_sphinx_iterations-2.sfb";
+                break;
+            case "Iron man":
+                nameSfb="ironman/IronMan.sfb";
+                break;
+            case "Deer":
+                nameSfb="deer/12961_White-Tailed_Deer_v1_l2.sfb";
+                break;
+            case "Dog":
+                nameSfb="dog/12228_Dog_v1_L2.sfb";
+
         }
+
+
         setContentView(R.layout.activity_model);
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);
