@@ -74,7 +74,7 @@ public class SettingFragment extends Fragment {
             });
         }
         text_version.setText("1.0.0");
-        text_copyright.setText("Copyrignt20190613.AllRightsReserved");
+        text_copyright.setText("Copyright20190613.AllRightsReserved");
     }
 
     public void signOut() {

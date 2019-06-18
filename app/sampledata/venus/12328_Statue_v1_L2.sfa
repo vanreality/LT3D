@@ -37,7 +37,7 @@
     file: 'sampledata/venus/12328_Statue_v1_L2.obj',
     name: '12328_Statue_v1_L2',
     recenter: 'root',
-    scale: 0.0016663000000000001,
+    scale: 0.0056663000000000001,
   },
   samplers: [
     {

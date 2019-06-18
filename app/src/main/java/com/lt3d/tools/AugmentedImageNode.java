@@ -26,6 +26,9 @@ import com.google.ar.sceneform.Node;
 import com.google.ar.sceneform.math.Quaternion;
 import com.google.ar.sceneform.math.Vector3;
 import com.google.ar.sceneform.rendering.ModelRenderable;
+import com.google.ar.sceneform.ux.ArFragment;
+import com.google.ar.sceneform.ux.TransformableNode;
+import com.lt3d.fragment.ScanFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,14 +44,15 @@ public class AugmentedImageNode extends AnchorNode {
   private static final String TAG = "AugmentedImageNode";
   // The augmented image represented by this node.
   private AugmentedImage image;
+  private ArFragment arFragment;
 
 
   private static List<CompletableFuture<ModelRenderable>> myModels=new ArrayList<>();
   private static CompletableFuture<ModelRenderable> myModel;
 
-  public AugmentedImageNode(Context context,String nodeName) {
+  public AugmentedImageNode(Context context,String nodeName, ArFragment arFragment) {
     // Upon construction, start loading the models for the corners of the frame.
-
+    this.arFragment=arFragment;
     List<String> nodeNames = new ArrayList<>();
     nodeNames.add("dog.png");
     myModel =
@@ -113,23 +117,30 @@ public class AugmentedImageNode extends AnchorNode {
                             Log.e(TAG, "Exception loading", throwable);
                             return null;
                           });
-        }
+    }
 
-      // Set the anchor based on the center of the image.
-      setAnchor(image.createAnchor(image.getCenterPose()));
+    // Set the anchor based on the center of the image.
+    setAnchor(image.createAnchor(image.getCenterPose()));
 
-      // Make the 4 corner nodes.
-      Vector3 localPosition = new Vector3();
-      Node cornerNode;
+    // Make the 4 corner nodes.
+    Vector3 localPosition = new Vector3();
 
 
 
     localPosition.set(0.0f, 0.0f, 0.0f);
-      cornerNode = new Node();
-      cornerNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), 270f));
-      cornerNode.setParent(this);
-      cornerNode.setLocalPosition(localPosition);
-      cornerNode.setRenderable(myModel.getNow(null));
+
+    // Create a transformableNode which enable us to rotate the model
+    TransformableNode transformableNode = new TransformableNode(arFragment.getTransformationSystem());
+    transformableNode.setParent(this);
+    transformableNode.setLocalPosition(localPosition);
+    transformableNode.setRenderable(myModel.getNow(null));
+    transformableNode.select();
+
+
+
+    //set rotation in direction (x,y,z) in degrees 90
+    transformableNode.setLocalRotation(Quaternion.axisAngle(new Vector3(1f, 0, 0), -90f));
+
   }
 
   public AugmentedImage getImage() {

@@ -86,18 +86,20 @@ public class ScanFragment extends Fragment {
                 case TRACKING:
                     // Have to switch to UI Thread to update View.
                     fitToScanView.setVisibility(View.GONE);
+                    /**
                     String modelName = augmentedImage.getName();
-                    AugmentedImageNode node = new AugmentedImageNode(getContext(), modelName);
+                    AugmentedImageNode node = new AugmentedImageNode(getContext(), modelName, arFragment);
                     node.setImage(augmentedImage);
                     Log.d("track",augmentedImage.getName());
-                    arFragment.getArSceneView().getScene().addChild(node);
+                    arFragment.getArSceneView().getScene().addChild(node);*/
 
                     // Create a new anchor for newly found images.
                     if (!augmentedImageMap.containsKey(augmentedImage)) {
-                        AugmentedImageNode newNode = new AugmentedImageNode(getContext(),"add");
+                        String modelName = augmentedImage.getName();
+                        AugmentedImageNode newNode = new AugmentedImageNode(getContext(),modelName, arFragment);
                         newNode.setImage(augmentedImage);
-                        augmentedImageMap.put(augmentedImage, node);
-                        arFragment.getArSceneView().getScene().addChild(node);
+                        augmentedImageMap.put(augmentedImage, newNode);
+                        arFragment.getArSceneView().getScene().addChild(newNode);
                     }
                     break;
 
@@ -107,4 +109,6 @@ public class ScanFragment extends Fragment {
             }
         }
     }
+
+
 }
