@@ -16,7 +16,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.lt3d.data.Book;
 import com.lt3d.data.Books;
-import com.lt3d.data.Model;
 import com.lt3d.data.User;
 import com.lt3d.fragment.LibraryFragment;
 import com.lt3d.fragment.ScanFragment;
@@ -104,9 +103,7 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         user = dataSnapshot.getValue(User.class);
-                        if (user != null) {
-                            changeFragment(libraryFragment);
-                        }
+                        changeFragment(libraryFragment);
                     }
 
                     @Override
