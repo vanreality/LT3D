@@ -44,17 +44,9 @@ public class AugmentedImageNode extends AnchorNode {
   // The augmented image represented by this node.
   private AugmentedImage image;
   private String imgName;
-  private String nodeName;
+  
   private List<String> nodeNames=new ArrayList<>();
-  private String nameSfb;
 
-  // Models of the 4 corners.  We use completable futures here to simplify
-  // the error handling and asynchronous loading.  The loading is started with the
-  // first construction of an instance, and then used when the image is set.
-//  private static CompletableFuture<ModelRenderable> ulCorner;
-//  private static CompletableFuture<ModelRenderable> urCorner;
-//  private static CompletableFuture<ModelRenderable> lrCorner;
-//  private static CompletableFuture<ModelRenderable> llCorner;
 
   private static List<CompletableFuture<ModelRenderable>> myModels=new ArrayList<>();
   private static CompletableFuture<ModelRenderable> myModel;
@@ -105,76 +97,6 @@ public class AugmentedImageNode extends AnchorNode {
         myModel=myModels.get(i);
       }
     }
-
-
-
-//    if(nodeName.equals("dog.png")){
-//      nameSfb ="model/frame_lower_left.sfb";
-//    }
-//
-//    else if (nodeName.equals("skull3.jpg")){
-//      nameSfb = "skull/12140_Skull_v3_L2.sfb";
-//    }
-//
-//    else if(nodeName.equals("venus.png")){
-//      nameSfb = "venus/12328_Statue_v1_L2.sfb";
-//    }
-//
-//    else if(nodeName.equals("egypt_lion.png")){
-//      nameSfb = "egypt/10085_egypt_sphinx_iterations-2.sfb";
-//    }
-//
-//    else if(nodeName.equals("deer.png")){
-//      nameSfb = "deer/12961_White-Tailed_Deer_v1_l2.sfb";
-//    }
-//
-//    else if(nodeName.equals("ironman.png")){
-//      nameSfb = "ironman/IronMan.sfb";
-//    }
-//
-//    else{
-//      nameSfb="model/frame_lower_left.sfb";
-//    }
-//
-//      if(myModel == null){
-//        myModel =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse(nameSfb))
-//                        .build();
-//
-//      }
-
-
-
-//    if(nodeName == "earth.jpg"){
-//      if (ulCorner == null) {
-//        ulCorner =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse("model/frame_upper_left.sfb"))
-//                        .build();
-//        urCorner =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse("model/frame_upper_right.sfb"))
-//                        .build();
-//        llCorner =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse("model/frame_lower_left.sfb"))
-//                        .build();
-//        lrCorner =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse("model/frame_lower_right.sfb"))
-//                        .build();
-//      }
-//    }
-
-//    else if(nodeName == "dog.png"){
-//      if(dog == null){
-//        dog =
-//                ModelRenderable.builder()
-//                        .setSource(context, Uri.parse("dog/12228_Dog_v1_L2.sfb"))
-//                        .build();
-//      }
-//    }
   }
 
   /**
@@ -213,56 +135,6 @@ public class AugmentedImageNode extends AnchorNode {
       cornerNode.setParent(this);
       cornerNode.setLocalPosition(localPosition);
       cornerNode.setRenderable(myModel.getNow(null));
-
-
-
-//    else if (this.imgName == "earth.jpg") {
-////      // If any of the models are not loaded, then recurse when all are loaded.
-////      if (!ulCorner.isDone() || !urCorner.isDone() || !llCorner.isDone() || !lrCorner.isDone()) {
-////        CompletableFuture.allOf(ulCorner, urCorner, llCorner, lrCorner)
-////                .thenAccept((Void aVoid) -> setImage(image,"earth.jpg"))
-////                .exceptionally(
-////                        throwable -> {
-////                          Log.e(TAG, "Exception loading", throwable);
-////                          return null;
-////                        });
-////      }
-////
-////      // Set the anchor based on the center of the image.
-////      setAnchor(image.createAnchor(image.getCenterPose()));
-////
-////      // Make the 4 corner nodes.
-////      Vector3 localPosition = new Vector3();
-////      Node cornerNode;
-////
-////      // Upper left corner.
-////      localPosition.set(-0.5f * image.getExtentX(), 0.0f, -0.5f * image.getExtentZ());
-////      cornerNode = new Node();
-////      cornerNode.setParent(this);
-////      cornerNode.setLocalPosition(localPosition);
-////      cornerNode.setRenderable(ulCorner.getNow(null));
-////
-////      // Upper right corner.
-////      localPosition.set(0.5f * image.getExtentX(), 0.0f, -0.5f * image.getExtentZ());
-////      cornerNode = new Node();
-////      cornerNode.setParent(this);
-////      cornerNode.setLocalPosition(localPosition);
-////      cornerNode.setRenderable(urCorner.getNow(null));
-////
-////      // Lower right corner.
-////      localPosition.set(0.5f * image.getExtentX(), 0.0f, 0.5f * image.getExtentZ());
-////      cornerNode = new Node();
-////      cornerNode.setParent(this);
-////      cornerNode.setLocalPosition(localPosition);
-////      cornerNode.setRenderable(lrCorner.getNow(null));
-////
-////      // Lower left corner.
-////      localPosition.set(-0.5f * image.getExtentX(), 0.0f, 0.5f * image.getExtentZ());
-////      cornerNode = new Node();
-////      cornerNode.setParent(this);
-////      cornerNode.setLocalPosition(localPosition);
-////      cornerNode.setRenderable(llCorner.getNow(null));
-////    }
   }
 
   public AugmentedImage getImage() {

@@ -44,13 +44,29 @@ public class ModelActivity extends AppCompatActivity {
         if (!checkIsSupportedDeviceOrFinish(this)) {
             return;
         }
-        if(nameModel.equals("Skull")){
-            nameSfb="skull/12140_Skull_v3_L2.sfb";
-        }else if(nameModel.equals("Heart")) {
-            nameSfb="venus/12328_Statue_v1_L2.sfb";
-        }else {
-            nameSfb="model/frame_lower_left.sfb";
+
+        switch (nameModel){
+            case "Skull":
+                nameSfb="skull/12140_Skull_v3_L2.sfb";
+                break;
+            case "Venus":
+                nameSfb="venus/12328_Statue_v1_L2.sfb";
+                break;
+            case "Egypt lion":
+                nameSfb="egypt/10085_egypt_sphinx_iterations-2.sfb";
+                break;
+            case "Iron man":
+                nameSfb="ironman/IronMan.sfb";
+                break;
+            case "Deer":
+                nameSfb="deer/12961_White-Tailed_Deer_v1_l2.sfb";
+                break;
+            case "Dog":
+                nameSfb="dog/12228_Dog_v1_L2.sfb";
+
         }
+
+
         setContentView(R.layout.activity_model);
 
         arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.model_scan);

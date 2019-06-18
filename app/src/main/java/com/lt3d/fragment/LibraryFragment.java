@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -57,7 +56,6 @@ public class LibraryFragment extends Fragment {
     private MainActivity mainActivity;
 
     private Books books;
-    private Models models;
 
     @Override
     public void onAttach(Context context) {
@@ -179,11 +177,10 @@ public class LibraryFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 books = dataSnapshot.getValue(Books.class);
                 int id = 0;
-                User user = mainActivity.getUser();
-                if (user== null) return;
+                if (mainActivity.getUser() == null) return;
+
                 for (Book b : books.books) {
-                    if(user!=null)
-                    if (user.library.contains(String.valueOf(id))) {
+                    if (mainActivity.getUser().library.contains(String.valueOf(id))) {
                         libraryRecyclerViewAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
                     }
                     id++;
@@ -242,12 +239,8 @@ public class LibraryFragment extends Fragment {
 
         int id = 0;
         for (Book b : books.books) {
-            if (mainActivity.getUser()==null)
+            if (mainActivity.getUser() == null || !mainActivity.getUser().library.contains(String.valueOf(id)))
                 libraryRecyclerViewAddBookAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
-
-            else if (!mainActivity.getUser().library.contains(String.valueOf(id))) {
-                libraryRecyclerViewAddBookAdapter.addData(new DataEntity(b.title, String.valueOf(id)));
-            }
             id++;
         }
     }
@@ -507,31 +500,17 @@ public class LibraryFragment extends Fragment {
             this.books_tmp = books;
         }
 
-        List<DataEntity> getBooks(){
-            return this.books;
-        }
-
         void addData(DataEntity book) {
             books.add(book);
             notifyItemInserted(books.size());
         }
 
-        public void sortBookAZ(){
-            Collections.sort(books, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return dataEntity.getLabel().compareTo(t1.getLabel());
-                }
-            });notifyDataSetChanged();
+        void sortBookAZ(){
+            Collections.sort(books, (dataEntity, t1) -> dataEntity.getLabel().compareTo(t1.getLabel()));notifyDataSetChanged();
         }
 
-        public void sortBookZA(){
-            Collections.sort(books, new Comparator<DataEntity>() {
-                @Override
-                public int compare(DataEntity dataEntity, DataEntity t1) {
-                    return t1.getLabel().compareTo(dataEntity.getLabel());
-                }
-            });notifyDataSetChanged();
+        void sortBookZA(){
+            Collections.sort(books, (dataEntity, t1) -> t1.getLabel().compareTo(dataEntity.getLabel()));notifyDataSetChanged();
         }
 
         public void search(CharSequence sequence){
@@ -553,6 +532,7 @@ public class LibraryFragment extends Fragment {
             books=mbooks;
             notifyDataSetChanged();
         }
+
         @NonNull
         @Override
         public LibraryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -604,11 +584,20 @@ public class LibraryFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(getAdapterPosition()!=RecyclerView.NO_POSITION){
-                    mainActivity.getUser().library.add(books.get(getAdapterPosition()).getId());
                     databaseReference = FirebaseDatabase.getInstance().getReference()
                             .child("users")
                             .child(mainActivity.getCurrentUser().getUid());
-                    databaseReference.setValue(mainActivity.getUser());
+
+                    User user = mainActivity.getUser();
+                    if (user == null) {
+                        List<String> l = new ArrayList<>();
+                        l.add(books.get(getAdapterPosition()).getId());
+                        user = new User(l);
+                        databaseReference.setValue(user);
+                    } else {
+                        mainActivity.getUser().library.add(books.get(getAdapterPosition()).getId());
+                        databaseReference.setValue(mainActivity.getUser());
+                    }
 
                     showMenu();
                     mainActivity.getSupportActionBar().setDisplayHomeAsUpEnabled(false);
