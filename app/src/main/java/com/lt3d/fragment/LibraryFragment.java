@@ -180,6 +180,8 @@ public class LibraryFragment extends Fragment {
                 books = dataSnapshot.getValue(Books.class);
                 int id = 0;
                 User user = mainActivity.getUser();
+                if (user.library.isEmpty()) return;
+                
                 for (Book b : books.books) {
                     if(user!=null)
                     if (user.library.contains(String.valueOf(id))) {
