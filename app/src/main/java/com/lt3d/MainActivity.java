@@ -128,9 +128,11 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 case R.id.navigation_scan:
                     changeFragment(scanFragment);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     return true;
                 case R.id.navigation_setting:
                     changeFragment(settingFragment);
+                    getSupportActionBar().setDisplayHomeAsUpEnabled(false);
                     return true;
             }
             return false;
