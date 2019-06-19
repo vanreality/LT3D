@@ -36,6 +36,13 @@ public class ScanFragment extends Fragment {
     // the database.
     private final Map<AugmentedImage, AugmentedImageNode> augmentedImageMap = new HashMap<>();
 
+    /**
+     * Create a view corresponding to the ScanFragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @SuppressLint("InflateParams")
     @Nullable
     @Override
@@ -53,17 +60,24 @@ public class ScanFragment extends Fragment {
             /* map is already there, just return view as it is */
         }
 
-//        view = inflater.inflate(R.layout.fragment_scan, container, false);
         arFragmentConfig();
         return view;
     }
 
+    /**
+     * Set the view of the fragment to the scanned image
+     * Set the UpdateListener to this view
+     */
     private void arFragmentConfig() {
         arFragment = (ArFragment) Objects.requireNonNull(getActivity()).getSupportFragmentManager().findFragmentById(R.id.ux_fragment);
         fitToScanView = view.findViewById(R.id.image_view_fit_to_scan);
         arFragment.getArSceneView().getScene().addOnUpdateListener(this::onUpdateFrame);
     }
 
+    /**
+     * Call function for image detection every frame
+     * @param frameTime
+     */
     private void onUpdateFrame(FrameTime frameTime) {
         Frame frame = arFragment.getArSceneView().getArFrame();
 
@@ -72,8 +86,11 @@ public class ScanFragment extends Fragment {
             return;
         }
 
+        //Collect the result of tracking
         Collection<AugmentedImage> updatedAugmentedImages =
                 frame.getUpdatedTrackables(AugmentedImage.class);
+
+        //Get the state of tracking
         for (AugmentedImage augmentedImage : updatedAugmentedImages) {
             switch (augmentedImage.getTrackingState()) {
                 case PAUSED:
@@ -86,18 +103,14 @@ public class ScanFragment extends Fragment {
                 case TRACKING:
                     // Have to switch to UI Thread to update View.
                     fitToScanView.setVisibility(View.GONE);
-                    String modelName = augmentedImage.getName();
-                    AugmentedImageNode node = new AugmentedImageNode(getContext(), modelName);
-                    node.setImage(augmentedImage);
-                    Log.d("track",augmentedImage.getName());
-                    arFragment.getArSceneView().getScene().addChild(node);
 
                     // Create a new anchor for newly found images.
                     if (!augmentedImageMap.containsKey(augmentedImage)) {
-                        AugmentedImageNode newNode = new AugmentedImageNode(getContext(),"add");
+                        String modelName = augmentedImage.getName();
+                        AugmentedImageNode newNode = new AugmentedImageNode(getContext(),modelName, arFragment);
                         newNode.setImage(augmentedImage);
-                        augmentedImageMap.put(augmentedImage, node);
-                        arFragment.getArSceneView().getScene().addChild(node);
+                        augmentedImageMap.put(augmentedImage, newNode);
+                        arFragment.getArSceneView().getScene().addChild(newNode);
                     }
                     break;
 
@@ -107,4 +120,6 @@ public class ScanFragment extends Fragment {
             }
         }
     }
+
+
 }

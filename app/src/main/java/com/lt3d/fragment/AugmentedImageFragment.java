@@ -63,6 +63,13 @@ public class AugmentedImageFragment extends ArFragment {
         }
     }
 
+    /**
+     * Create a view corresponding to the AugmentedImageFragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(
             LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
